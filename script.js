@@ -29,17 +29,17 @@ function drawTerrain() {
   const maxRadius = Math.min(width, height) * 0.42;
 
   context.clearRect(0, 0, width, height);
-  context.fillStyle = "#11130d";
+  context.fillStyle = "#1d1c1a";
   context.fillRect(0, 0, width, height);
 
   const glow = context.createRadialGradient(width * 0.64, height * 0.28, 0, width * 0.64, height * 0.28, maxRadius * 1.65);
-  glow.addColorStop(0, "rgba(215,255,98,0.18)");
-  glow.addColorStop(0.5, "rgba(215,255,98,0.04)");
+  glow.addColorStop(0, "rgba(127,174,183,0.16)");
+  glow.addColorStop(0.5, "rgba(127,174,183,0.045)");
   glow.addColorStop(1, "rgba(0,0,0,0)");
   context.fillStyle = glow;
   context.fillRect(0, 0, width, height);
 
-  context.strokeStyle = "rgba(243,240,231,0.045)";
+  context.strokeStyle = "rgba(217,214,208,0.04)";
   context.lineWidth = 1;
 
   for (let x = 0; x < width; x += 34) {
@@ -77,7 +77,7 @@ function drawTerrain() {
     }
 
     context.closePath();
-    context.strokeStyle = `rgba(243,240,231,${0.08 + progress * 0.12})`;
+    context.strokeStyle = `rgba(217,214,208,${0.07 + progress * 0.11})`;
     context.lineWidth = ring % 3 === 0 ? 1.4 : 0.8;
     context.stroke();
   }
@@ -87,12 +87,12 @@ function drawTerrain() {
     context.beginPath();
     context.moveTo(centerX, centerY);
     context.lineTo(centerX + Math.cos(angle) * maxRadius * 1.25, centerY + Math.sin(angle) * maxRadius * 0.88);
-    context.strokeStyle = "rgba(215,255,98,0.16)";
+    context.strokeStyle = "rgba(127,174,183,0.16)";
     context.lineWidth = 1;
     context.stroke();
   }
 
-  context.fillStyle = "#d7ff62";
+  context.fillStyle = "#7faeb7";
   for (let i = 0; i < 11; i += 1) {
     const angle = (i / 11) * Math.PI * 2 - time * 0.006;
     const orbit = maxRadius * (0.45 + (i % 4) * 0.18);
@@ -106,7 +106,7 @@ function drawTerrain() {
   for (let i = 0; i < 140; i += 1) {
     const x = (Math.sin(i * 12.9898) * 43758.5453) % 1;
     const y = (Math.sin(i * 78.233) * 24634.6345) % 1;
-    context.fillStyle = "rgba(243,240,231,0.08)";
+    context.fillStyle = "rgba(217,214,208,0.075)";
     context.fillRect(Math.abs(x) * width, Math.abs(y) * height, 1, 1);
   }
 
