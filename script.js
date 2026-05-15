@@ -25,55 +25,88 @@ function drawTerrain() {
   const width = canvas.clientWidth;
   const height = canvas.clientHeight;
   const centerX = width * 0.5;
-  const centerY = height * 0.48;
-  const maxRadius = Math.min(width, height) * 0.48;
+  const centerY = height * 0.5;
+  const maxRadius = Math.min(width, height) * 0.42;
 
   context.clearRect(0, 0, width, height);
-  context.fillStyle = "#080808";
+  context.fillStyle = "#11130d";
   context.fillRect(0, 0, width, height);
 
-  const glow = context.createRadialGradient(centerX, centerY, 0, centerX, centerY, maxRadius * 1.35);
-  glow.addColorStop(0, "rgba(255,255,255,0.12)");
-  glow.addColorStop(0.48, "rgba(120,120,120,0.06)");
+  const glow = context.createRadialGradient(width * 0.64, height * 0.28, 0, width * 0.64, height * 0.28, maxRadius * 1.65);
+  glow.addColorStop(0, "rgba(215,255,98,0.18)");
+  glow.addColorStop(0.5, "rgba(215,255,98,0.04)");
   glow.addColorStop(1, "rgba(0,0,0,0)");
   context.fillStyle = glow;
   context.fillRect(0, 0, width, height);
 
-  for (let i = 0; i < 34; i += 1) {
-    const progress = i / 33;
-    const radiusX = maxRadius * (0.16 + progress * 0.95);
-    const radiusY = maxRadius * (0.1 + progress * 0.7);
-    const lift = Math.sin(progress * Math.PI) * maxRadius * 0.18;
-    const points = 170;
+  context.strokeStyle = "rgba(243,240,231,0.045)";
+  context.lineWidth = 1;
+
+  for (let x = 0; x < width; x += 34) {
+    context.beginPath();
+    context.moveTo(x, 0);
+    context.lineTo(x, height);
+    context.stroke();
+  }
+
+  for (let y = 0; y < height; y += 34) {
+    context.beginPath();
+    context.moveTo(0, y);
+    context.lineTo(width, y);
+    context.stroke();
+  }
+
+  for (let ring = 0; ring < 16; ring += 1) {
+    const progress = ring / 15;
+    const radius = maxRadius * (0.22 + progress * 0.95);
+    const sides = 6;
 
     context.beginPath();
 
-    for (let p = 0; p <= points; p += 1) {
-      const angle = (p / points) * Math.PI * 2;
-      const rough =
-        Math.sin(angle * 3 + progress * 8 + time * 0.012) * 0.09 +
-        Math.cos(angle * 5 - progress * 6 + time * 0.009) * 0.055 +
-        Math.sin(angle * 9 + time * 0.006) * 0.025;
-      const x = centerX + Math.cos(angle) * radiusX * (1 + rough);
-      const y = centerY + Math.sin(angle) * radiusY * (1 + rough) - lift + progress * maxRadius * 0.45;
+    for (let i = 0; i <= sides; i += 1) {
+      const angle = (i / sides) * Math.PI * 2 - Math.PI / 2 + time * 0.002;
+      const pulse = Math.sin(time * 0.018 + ring * 0.8 + i) * 0.05;
+      const x = centerX + Math.cos(angle) * radius * (1 + pulse);
+      const y = centerY + Math.sin(angle) * radius * 0.72 * (1 - pulse);
 
-      if (p === 0) {
+      if (i === 0) {
         context.moveTo(x, y);
       } else {
         context.lineTo(x, y);
       }
     }
 
-    const alpha = 0.08 + progress * 0.19;
-    context.strokeStyle = `rgba(255,255,255,${alpha})`;
-    context.lineWidth = i % 5 === 0 ? 1.3 : 0.7;
+    context.closePath();
+    context.strokeStyle = `rgba(243,240,231,${0.08 + progress * 0.12})`;
+    context.lineWidth = ring % 3 === 0 ? 1.4 : 0.8;
     context.stroke();
   }
 
-  for (let i = 0; i < 120; i += 1) {
+  for (let spoke = 0; spoke < 9; spoke += 1) {
+    const angle = (spoke / 9) * Math.PI * 2 + time * 0.003;
+    context.beginPath();
+    context.moveTo(centerX, centerY);
+    context.lineTo(centerX + Math.cos(angle) * maxRadius * 1.25, centerY + Math.sin(angle) * maxRadius * 0.88);
+    context.strokeStyle = "rgba(215,255,98,0.16)";
+    context.lineWidth = 1;
+    context.stroke();
+  }
+
+  context.fillStyle = "#d7ff62";
+  for (let i = 0; i < 11; i += 1) {
+    const angle = (i / 11) * Math.PI * 2 - time * 0.006;
+    const orbit = maxRadius * (0.45 + (i % 4) * 0.18);
+    const x = centerX + Math.cos(angle) * orbit;
+    const y = centerY + Math.sin(angle) * orbit * 0.7;
+    context.globalAlpha = 0.55 + Math.sin(time * 0.03 + i) * 0.22;
+    context.fillRect(x - 2, y - 2, 4, 4);
+  }
+  context.globalAlpha = 1;
+
+  for (let i = 0; i < 140; i += 1) {
     const x = (Math.sin(i * 12.9898) * 43758.5453) % 1;
     const y = (Math.sin(i * 78.233) * 24634.6345) % 1;
-    context.fillStyle = "rgba(255,255,255,0.08)";
+    context.fillStyle = "rgba(243,240,231,0.08)";
     context.fillRect(Math.abs(x) * width, Math.abs(y) * height, 1, 1);
   }
 
