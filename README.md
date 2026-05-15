@@ -1,8 +1,8 @@
 # Portfolio
 
-Portfolio statique inspiré par `noff.me`.
+Static portfolio inspired by `noff.me`.
 
-## Lancer
+## Run
 
 ```bash
 npm install
@@ -15,6 +15,6 @@ npm run start
 npm run build
 ```
 
-## Déploiement GitHub Pages
+## GitHub Pages Deployment
 
-Pousse le repo sur GitHub, puis active Pages avec GitHub Actions. Le workflow publie le contenu de `dist` après chaque push sur `main`.
+Push the repo to GitHub, then enable Pages with GitHub Actions. The workflow publishes the `dist` folder after every push to `main`.
