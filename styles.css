@@ -712,20 +712,24 @@ footer span:first-child,
 
 .theme-toggle .icon-sun {
   left: 7px;
-  opacity: 0.55;
+  color: var(--bg);
+  opacity: 1;
 }
 
 .theme-toggle .icon-moon {
   right: 7px;
-  opacity: 1;
+  color: var(--muted);
+  opacity: 0.55;
 }
 
 [data-theme="light"] .theme-toggle .icon-sun {
-  opacity: 1;
+  color: var(--muted);
+  opacity: 0.55;
 }
 
 [data-theme="light"] .theme-toggle .icon-moon {
-  opacity: 0.55;
+  color: var(--bg);
+  opacity: 1;
 }
 
 .mention {
