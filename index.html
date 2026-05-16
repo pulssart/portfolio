@@ -1,9 +1,27 @@
 <!doctype html>
+<!--
+  ╔══════════════════════════════════════════════╗
+  ║  Hey curious dev — nice to meet you.          ║
+  ║                                                ║
+  ║  This site is hand-rolled HTML/CSS/JS,        ║
+  ║  no framework, no build step, no bundler.     ║
+  ║  Just files, like in the old days.            ║
+  ║                                                ║
+  ║  Try the Konami code. ↑ ↑ ↓ ↓ ← → ← → B A     ║
+  ║  Or peek at `window.__adrien` in the console. ║
+  ║                                                ║
+  ║  — Adrien, designer who codes (sometimes too  ║
+  ║    much, ask my wife)                          ║
+  ╚══════════════════════════════════════════════╝
+-->
 <html lang="en">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Adrien's portfolio, senior product designer.">
+    <meta name="author" content="Adrien Donot — Paris">
+    <meta name="coffee" content="3-4 cups before noon, dangerous after 6pm">
+    <meta name="hire-me" content="hello — let's build something weird and useful together">
     <meta property="og:title" content="Adrien, product designer">
     <meta property="og:description" content="Product, interface, prototyping, and design systems.">
     <meta property="og:type" content="website">
@@ -12,54 +30,120 @@
   </head>
   <body>
     <main class="wrapper" aria-label="Portfolio">
-      <a class="logo" href="#top" aria-label="Home">
-        <span>A</span>
-        <span>D</span>
-      </a>
+      <div class="logo-row">
+        <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle theme" aria-pressed="false">
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"/></svg>
+          <span class="knob"></span>
+        </button>
+        <div class="status-pill" role="status" aria-label="Availability">
+          <span class="status-dot" aria-hidden="true"></span>
+          <span class="status-label">Not available</span>
+          <span class="status-sep" aria-hidden="true"></span>
+          <a class="status-contact" href="#contact-form">Contact</a>
+        </div>
+      </div>
 
       <section id="top" class="section intro">
         <h1><span>Hi, I’m Adrien.</span> Product designer in Paris.</h1>
         <p>
-          Right now, I’m building
-          <button class="work-pill" data-preview="Atlas"><span>Atlas</span><svg viewBox="0 0 17 11" aria-hidden="true"><path d="M8.3 10.4c-1.2 0-2-.3-2.3-.3a9.6 9.6 0 0 1-2-.8 9.9 9.9 0 0 1-2.8-2.2 6 6 0 0 1-.8-1C.2 5.6.2 5.3.2 5.3c0-.3.2-.6.3-.8.2-.5.4-.8.7-1.1A9.9 9.9 0 0 1 4.1 1.2 9.6 9.6 0 0 1 6 .5 8.5 8.5 0 0 1 8.3.2a8.6 8.6 0 0 1 2.3.3 9.5 9.5 0 0 1 2 .7 10 10 0 0 1 1.5 1.1 7.5 7.5 0 0 1 1.2 1.1 6 6 0 0 1 .8 1.1c.2.4.3.6.3.8 0 .3-.1.5-.3.8a6 6 0 0 1-.8 1 9 9 0 0 1-1.2 1.2 10 10 0 0 1-1.6 1 9.4 9.4 0 0 1-2 .8c-.7.2-1.4.3-2.2.3Zm0-2a3.1 3.1 0 0 0 2.8-2 3 3 0 0 0 .2-1.1 3 3 0 0 0-.9-2.2 3 3 0 0 0-2.1-.9 3 3 0 0 0-2.2.9 3 3 0 0 0-.9 2.2 3 3 0 0 0 .9 2.2 3 3 0 0 0 2.2.9Zm0-2.1a.9.9 0 0 0 .7-.3.9.9 0 0 0 .3-.7.9.9 0 0 0-.3-.7.9.9 0 0 0-.7-.3.9.9 0 0 0-.7.3.9.9 0 0 0-.3.7.9.9 0 0 0 .3.7.9.9 0 0 0 .7.3Z"/></svg></button>
-          a planning tool for product teams that connects vision, user research, and everyday decisions.
+          I’m a senior product designer currently working at <button type="button" class="mention mention-button" data-project="dotfile"><span class="mention-logo"><img src="./assets/logos/dotfile.svg" alt=""></span>Dotfile</button>, where I design compliance tools powered by AI. Most of my work sits between complex systems, human behavior, and interfaces that need to stay understandable even when the underlying logic becomes messy as hell.
         </p>
         <p>
-          Before that, I worked with startups and internal teams on SaaS, mobile, and AI products. I like problems where the interface has to make something complex feel clear without making it stupid. I’ve worked on redesigns, onboarding flows, dashboards, design systems, and prototypes realistic enough to end vague meetings.
+          Before that, I spent several years at <button type="button" class="mention mention-button" data-project="lemlist"><span class="mention-logo"><img src="./assets/logos/lemlist.svg" alt=""></span>lempire</button> working across products like Lemlist, Lemcal, and Lemwarm, helping scale the product design side from startup chaos to a much more mature SaaS ecosystem. Earlier in my career, I also worked at <button type="button" class="mention mention-button" data-project="apple"><span class="mention-logo"><img src="./assets/logos/apple.png" alt=""></span>Apple</button>, which probably explains my obsession with details, clarity, and interactions that feel obvious without needing a tutorial.
         </p>
-        <p>
-          I’m useful when a product has too many possibilities and not enough shape. I structure, test, and push the details until the usage feels obvious. Polished demos matter less to me than interfaces that hold up under real pressure.
-        </p>
-        <p>
-          I’m interested in applied AI, creative tools, maps, personal memory, and products that give people more control. On Saturdays, I sketch small apps, take long walks, and write too many ideas in files I pretend are organized.
-        </p>
+        <button id="intro-more-toggle" class="intro-more-toggle" type="button" data-action="open" aria-expanded="false" aria-controls="intro-more">
+          <span class="intro-more-label">Read more</span>
+          <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3 5l3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div id="intro-more" class="intro-more" hidden>
+          <p>
+            I like products where the challenge is not just making things beautiful, but making complexity feel calm. I’ve worked on CRMs, AI workflows, dashboards, onboarding systems, design systems, internal tools, sales platforms, and increasingly, agentic AI interfaces. My favorite projects are usually the ones where nobody really knows what the final shape should be yet.
+          </p>
+          <p>
+            I’m useful when a product has too many directions, too many features, or too much abstraction. I tend to bring structure, simplify the mental model, prototype fast, and push until the interaction feels natural enough that people stop thinking about the interface itself.
+          </p>
+          <p>
+            Outside of work, I build a lot of side projects around AI, creative tooling, memory, storytelling, realtime interfaces, and generative visuals. Recently I’ve been experimenting with apps like Echo, Flux, Natura, and StoryTime AI. Most start as “just a small experiment” and then suddenly it’s 2am and I’m redesigning an onboarding flow for a fake feature nobody asked for. Which is honestly still one of my favorite things in the world.
+          </p>
+          <button id="intro-less-toggle" class="intro-more-toggle intro-less-toggle" type="button" data-action="close" aria-controls="intro-more">
+            <span>Read less</span>
+            <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3 7l3-3 3 3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
       </section>
 
       <section class="section list-section">
-        <h2>01 Work</h2>
+        <h2>Work</h2>
         <ol>
-          <li><div class="item-copy"><div class="item-title"><span class="company-logo-frame"><img class="company-logo" src="./assets/logos/dotfile.svg" alt="Dotfile logo"></span><a href="https://example.com" target="_blank" rel="noreferrer">Dotfile</a></div><p>Turning KYB and compliance complexity into a simple, powerful agentic SaaS.</p></div><span>Now</span></li>
-          <li><div class="item-copy"><div class="item-title"><span class="company-logo-frame"><img class="company-logo" src="./assets/logos/lemlist.svg" alt="lemlist logo"></span><a href="https://example.com" target="_blank" rel="noreferrer">lemlist</a></div><p>The next generation of AI SaaS for sales teams.</p></div><span>2021 to 2025</span></li>
-          <li><div class="item-copy"><div class="item-title"><span class="company-logo-frame"><img class="company-logo" src="./assets/logos/cocolabs.png" alt="Cocolabs logo"></span><a href="https://example.com" target="_blank" rel="noreferrer">Cocolabs</a></div><p>Custom service marketplaces designed around specific business operations.</p></div><span>2018 to 2021</span></li>
-          <li><div class="item-copy"><div class="item-title"><span class="company-logo-frame"><img class="company-logo company-logo-wide" src="./assets/logos/xxii.png" alt="XXII logo"></span><a href="https://example.com" target="_blank" rel="noreferrer">XXII</a></div><p>Automating retail, services, and public spaces with computer vision and AI.</p></div><span>2015 to 2018</span></li>
-          <li><div class="item-copy"><div class="item-title"><span class="company-logo-frame"><img class="company-logo" src="./assets/logos/apple.png" alt="Apple logo"></span><a href="https://example.com" target="_blank" rel="noreferrer">Apple</a></div><p>Cultivating apples and high-end technology, naturally.</p></div><span>2009 to 2016</span></li>
+          <li data-role="Founder Senior Product Designer"><div class="item-copy"><div class="item-title"><span class="company-logo-frame"><img class="company-logo" src="./assets/logos/dotfile.svg" alt="Dotfile logo"></span><a href="#" data-project="dotfile">Dotfile</a></div><p>Turning KYB and compliance complexity into a simple, powerful agentic SaaS.</p></div><span>Now</span></li>
+          <li data-role="Head of Design"><div class="item-copy"><div class="item-title"><span class="company-logo-frame"><img class="company-logo" src="./assets/logos/lemlist.svg" alt="lemlist logo"></span><a href="#" data-project="lemlist">lemlist</a></div><p>The next generation of AI SaaS for sales teams.</p></div><span>2021 to 2025</span></li>
+          <li data-role="Lead Product Designer"><div class="item-copy"><div class="item-title"><span class="company-logo-frame"><img class="company-logo" src="./assets/logos/cocolabs.png" alt="Cocolabs logo"></span><a href="#" data-project="cocolabs">Cocolabs</a></div><p>Custom service marketplaces designed around specific business operations.</p></div><span>2018 to 2021</span></li>
+          <li data-role="Founder Product Designer"><div class="item-copy"><div class="item-title"><span class="company-logo-frame"><img class="company-logo company-logo-wide" src="./assets/logos/xxii.png" alt="XXII logo"></span><a href="#" data-project="xxii">XXII</a></div><p>Automating retail, services, and public spaces with computer vision and AI.</p></div><span>2015 to 2018</span></li>
+          <li data-role="In-Store Guest Trainer"><div class="item-copy"><div class="item-title"><span class="company-logo-frame"><img class="company-logo" src="./assets/logos/apple.png" alt="Apple logo"></span><a href="#" data-project="apple">Apple</a></div><p>Cultivating apples and high-end technology, naturally.</p></div><span>2009 to 2016</span></li>
         </ol>
       </section>
 
-      <section class="section list-section">
-        <h2>02 Web Sideproject</h2>
+      <section class="section feedback-section feedback-section--mobile" aria-label="Feedback">
+        <h2>Feedback</h2>
+        <div class="feedback-slider" data-mode="auto">
+          <div class="feedback-stage">
+            <article class="feedback is-active">
+              <blockquote>Adrien is a world-class Product Designer. He is highly creative, connected to new trends, capable of working easily with anyone and executing quickly. He had a huge impact on building lemlist and I highly recommend him.</blockquote>
+              <footer><span class="feedback-co"><img src="./assets/logos/lemlist.svg" alt="lemlist"></span><strong>Charles Tenot</strong><span>CEO @ lemlist & lempire · Oct 2025</span></footer>
+            </article>
+            <article class="feedback">
+              <blockquote>I had the chance to work with Adrien for several years at lemlist, where he led the design of our lemlist V4 UX and UI — a huge redesign that completely reshaped our product experience. Adrien is one of those rare designers who combine creativity, attention to detail, and a deep understanding of what makes a great user experience. His background at Apple clearly shows in the way he thinks about simplicity and usability.</blockquote>
+              <footer><span class="feedback-co"><img src="./assets/logos/lemlist.svg" alt="lemlist"></span><strong>Mika F</strong><span>CTO @ lemlist · Oct 2025</span></footer>
+            </article>
+            <article class="feedback">
+              <blockquote>I loved working with Adrien. He's always multiple steps ahead — so much that it seems he has all the designs figured out until 2050. He was always focused on what users needed and solving their pain, but also knew how to go deep in discovery with very innovative design. His love for AI pushed us all further.</blockquote>
+              <footer><span class="feedback-co"><img src="./assets/logos/lemlist.svg" alt="lempire"></span><strong>Matthieu Jungfer</strong><span>Growth & AI @ lempire · Feb 2025</span></footer>
+            </article>
+            <article class="feedback">
+              <blockquote>I had the chance to be managed by Adrien during my time at lempire. His talent, empathy, and curiosity make him a manager who truly matters and makes a real difference for a team. He has a gift for uniting a team made of diverse personalities and creating a synergy where everyone finds their place. His entrepreneurial approach even pushed me to launch my own AI project.</blockquote>
+              <footer><span class="feedback-co"><img src="./assets/logos/lemlist.svg" alt="lempire"></span><strong>Coralie Perz</strong><span>Product Designer @ lempire · Dec 2024</span></footer>
+            </article>
+            <article class="feedback">
+              <blockquote>I learned a lot working alongside Adrien, both in design and through his way of leading. Always attentive — one of his greatest strengths — he created a positive and motivating work environment. He's a colleague with whom you move fast, well, and always in a good mood.</blockquote>
+              <footer><span class="feedback-co"><img src="./assets/logos/lemlist.svg" alt="lemlist"></span><strong>Bertrand Deveseleer</strong><span>Designer @ lemlist & Claap · Dec 2024</span></footer>
+            </article>
+            <article class="feedback">
+              <blockquote>If I had to pick only a few people to work with — or more precisely, to design new ideas and projects with — Adrien would be one of them. A great encounter at Apple, a beautiful story at XXII, and still a pleasure to share and challenge concepts with him every day.</blockquote>
+              <footer><span class="feedback-co"><img src="./assets/logos/xxii.png" alt="XXII"></span><strong>Dam Mulhem</strong><span>XXII Co-founder · Mar 2019</span></footer>
+            </article>
+            <article class="feedback">
+              <blockquote>It's rare to have a talent like Adrien on a team. He has the ability to stay calm and manage priorities in tricky situations. He's a perfectionist by nature and likes to see things through to the end. Many employers would be lucky to have Adrien.</blockquote>
+              <footer><span class="feedback-co"><img src="./assets/logos/xxii.png" alt="XXII"></span><strong>Daniel Marques</strong><span>HR Director @ XXII · Oct 2014</span></footer>
+            </article>
+            <article class="feedback">
+              <blockquote>Adrien is a versatile person with remarkable talent in the graphic arts. At Apple, Adrien and I started together when the company was just launching on the French market, and he remains to this day one of the most open and professional people I know.</blockquote>
+              <footer><span class="feedback-co"><img src="./assets/logos/apple.png" alt="Apple"></span><strong>Tristan Darien</strong><span>Apple Trainer · Apr 2012</span></footer>
+            </article>
+          </div>
+          <div class="feedback-controls">
+            <button class="feedback-btn" data-action="prev" type="button" aria-label="Previous"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10 3 5 8l5 5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+            <button class="feedback-mode" data-action="toggle" type="button" aria-pressed="true"><span class="mode-dot"></span><span class="mode-label">Auto</span></button>
+            <button class="feedback-btn" data-action="next" type="button" aria-label="Next"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="m6 3 5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+            <div class="feedback-dots" role="tablist"></div>
+            <span class="feedback-count"><b>01</b> / 08</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="section list-section is-collapsible is-collapsed">
+        <h2>Web Sideproject</h2>
         <ol>
-          <li><div class="item-copy"><a href="https://example.com" target="_blank" rel="noreferrer">Buska</a><p>Find promising leads before anyone starts searching for them.</p></div><span>Web</span></li>
-          <li><div class="item-copy"><a href="https://example.com" target="_blank" rel="noreferrer">Senthor</a><p>Your content, your rules. Make AI bots pay for the right to pass through.</p></div><span>Web</span></li>
-          <li><div class="item-copy"><a href="https://example.com" target="_blank" rel="noreferrer">Vitea</a><p>A private personal doctor with the full context of your life, stored locally.</p></div><span>Web</span></li>
-          <li><div class="item-copy"><a href="https://example.com" target="_blank" rel="noreferrer">Dachly</a><p>A quiet, focused homepage for starting the day without noise.</p></div><span>Web</span></li>
-          <li><div class="item-copy"><a href="https://example.com" target="_blank" rel="noreferrer">Wallpapers</a><p>A collection of wallpapers with a distinct visual point of view.</p></div><span>Web</span></li>
-          <li><div class="item-copy"><a href="https://example.com" target="_blank" rel="noreferrer">Jumble</a><p>An interactive surface for shaping ideas and documents with AI.</p></div><span>Web</span></li>
+          <li><div class="item-copy"><a href="https://www.buska.io/" target="_blank" rel="noreferrer">Buska</a><p>Find promising leads before anyone starts searching for them.</p></div><span>Web</span></li>
+          <li><div class="item-copy"><a href="https://www.senthor.io/" target="_blank" rel="noreferrer">Senthor</a><p>Your content, your rules. Make AI bots pay for the right to pass through.</p></div><span>Web</span></li>
+          <li><div class="item-copy"><a href="https://vitea.netlify.app/" target="_blank" rel="noreferrer">Vitea</a><p>A private personal doctor with the full context of your life, stored locally.</p></div><span>Web</span></li>
+          <li><div class="item-copy"><a href="https://dachly.com/" target="_blank" rel="noreferrer">Dachly</a><p>A quiet, focused homepage for starting the day without noise.</p></div><span>Web</span></li>
+          <li><div class="item-copy"><a href="https://digital-dreamscapes-wallpaper.netlify.app/" target="_blank" rel="noreferrer">Wallpapers</a><p>A collection of wallpapers with a distinct visual point of view.</p></div><span>Web</span></li>
         </ol>
       </section>
 
-      <section class="section list-section">
-        <h2>03 App Side Project</h2>
+      <section class="section list-section is-collapsible is-collapsed">
+        <h2>App Side Project</h2>
         <ol>
           <li><div class="item-copy"><a href="https://example.com" target="_blank" rel="noreferrer">Ola</a><p>A short, useful recap of your day.</p></div><span>App</span></li>
           <li><div class="item-copy"><a href="https://example.com" target="_blank" rel="noreferrer">Cuisto</a><p>Generative cooking for everyone, from loose cravings to real meals.</p></div><span>App</span></li>
@@ -70,39 +154,98 @@
       </section>
 
       <section class="section contact-section">
-        <h2>04 Contact</h2>
-        <ol>
-          <li><a href="https://example.com" target="_blank" rel="noreferrer">LinkedIn</a></li>
-          <li><a href="https://example.com" target="_blank" rel="noreferrer">X</a></li>
-          <li><a href="https://example.com" target="_blank" rel="noreferrer">Read.cv</a></li>
-          <li><a href="mailto:hello@example.com">Email</a></li>
-        </ol>
+        <form id="contact-form" class="contact-form" action="https://formspree.io/f/mbdwnvnn" method="POST" novalidate>
+          <label class="contact-field">
+            <span class="contact-label">Subject</span>
+            <input type="text" name="subject" required placeholder="What's on your mind?" autocomplete="off">
+          </label>
+          <label class="contact-field">
+            <span class="contact-label">Message</span>
+            <textarea name="body" rows="6" required placeholder="Say hi, tell me about your project, ask anything…"></textarea>
+          </label>
+          <button type="submit" class="contact-submit">
+            <span>Send via email</span>
+            <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10m-4-4 4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </form>
       </section>
 
       <footer>
-        <span>Start with a sketch, finish with real behavior.</span>
-        <span><button id="open-modal" type="button">Colophon</button> · ©2026</span>
+        <span>Made with passion and love.</span>
+        <span>© Adrien DONOT 2026</span>
       </footer>
     </main>
 
-    <aside class="preview" aria-label="Visual preview">
-      <button id="close-preview" class="close" type="button" aria-label="Close preview"><span></span><span></span></button>
-      <div class="preview-frame">
-        <canvas id="terrain" width="900" height="1100" aria-hidden="true"></canvas>
+    <aside class="portrait" aria-label="Portrait">
+      <div class="portrait-overlay" aria-hidden="true"></div>
+      <div class="project-slideshow" data-mode="auto" hidden>
+        <div class="project-stage" aria-live="polite"></div>
+        <button class="project-info-btn" type="button" aria-label="Project info" aria-expanded="false">
+          <svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="4.6" r="0.9" fill="currentColor"/><path d="M8 7.2v5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        </button>
+        <button class="project-close" type="button" aria-label="Close">
+          <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        </button>
+        <div class="project-info-panel" hidden>
+          <p class="project-info-text"></p>
+        </div>
+        <div class="project-info">
+          <strong class="project-title">Dotfile</strong>
+          <span class="project-role">Founder Senior Product Designer</span>
+        </div>
+        <div class="project-controls">
+          <button class="feedback-btn project-prev" type="button" aria-label="Previous"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10 3 5 8l5 5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <button class="feedback-mode project-mode" type="button" aria-pressed="true"><span class="mode-dot"></span><span class="mode-label">Auto</span></button>
+          <button class="feedback-btn project-next" type="button" aria-label="Next"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="m6 3 5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <div class="feedback-dots project-dots" role="tablist"></div>
+          <span class="feedback-count project-count"><b>01</b> / 00</span>
+        </div>
       </div>
-      <p class="preview-label"><span id="preview-title">Paris, studio</span><i></i><span>48.8566 N, 2.3522 E</span></p>
+      <div class="feedback-slider" data-mode="auto">
+        <div class="feedback-stage">
+          <article class="feedback is-active">
+            <blockquote>Adrien is a world-class Product Designer. He is highly creative, connected to new trends, capable of working easily with anyone and executing quickly. He had a huge impact on building lemlist and I highly recommend him.</blockquote>
+            <footer><span class="feedback-co"><img src="./assets/logos/lemlist.svg" alt="lemlist"></span><strong>Charles Tenot</strong><span>CEO @ lemlist & lempire · Oct 2025</span></footer>
+          </article>
+          <article class="feedback">
+            <blockquote>I had the chance to work with Adrien for several years at lemlist, where he led the design of our lemlist V4 UX and UI — a huge redesign that completely reshaped our product experience. Adrien is one of those rare designers who combine creativity, attention to detail, and a deep understanding of what makes a great user experience. His background at Apple clearly shows in the way he thinks about simplicity and usability.</blockquote>
+            <footer><span class="feedback-co"><img src="./assets/logos/lemlist.svg" alt="lemlist"></span><strong>Mika F</strong><span>CTO @ lemlist · Oct 2025</span></footer>
+          </article>
+          <article class="feedback">
+            <blockquote>I loved working with Adrien. He's always multiple steps ahead — so much that it seems he has all the designs figured out until 2050. He was always focused on what users needed and solving their pain, but also knew how to go deep in discovery with very innovative design. His love for AI pushed us all further.</blockquote>
+            <footer><span class="feedback-co"><img src="./assets/logos/lemlist.svg" alt="lempire"></span><strong>Matthieu Jungfer</strong><span>Growth & AI @ lempire · Feb 2025</span></footer>
+          </article>
+          <article class="feedback">
+            <blockquote>I had the chance to be managed by Adrien during my time at lempire. His talent, empathy, and curiosity make him a manager who truly matters and makes a real difference for a team. He has a gift for uniting a team made of diverse personalities and creating a synergy where everyone finds their place. His entrepreneurial approach even pushed me to launch my own AI project.</blockquote>
+            <footer><span class="feedback-co"><img src="./assets/logos/lemlist.svg" alt="lempire"></span><strong>Coralie Perz</strong><span>Product Designer @ lempire · Dec 2024</span></footer>
+          </article>
+          <article class="feedback">
+            <blockquote>I learned a lot working alongside Adrien, both in design and through his way of leading. Always attentive — one of his greatest strengths — he created a positive and motivating work environment. He's a colleague with whom you move fast, well, and always in a good mood.</blockquote>
+            <footer><span class="feedback-co"><img src="./assets/logos/lemlist.svg" alt="lemlist"></span><strong>Bertrand Deveseleer</strong><span>Designer @ lemlist & Claap · Dec 2024</span></footer>
+          </article>
+          <article class="feedback">
+            <blockquote>If I had to pick only a few people to work with — or more precisely, to design new ideas and projects with — Adrien would be one of them. A great encounter at Apple, a beautiful story at XXII, and still a pleasure to share and challenge concepts with him every day.</blockquote>
+            <footer><span class="feedback-co"><img src="./assets/logos/xxii.png" alt="XXII"></span><strong>Dam Mulhem</strong><span>XXII Co-founder · Mar 2019</span></footer>
+          </article>
+          <article class="feedback">
+            <blockquote>It's rare to have a talent like Adrien on a team. He has the ability to stay calm and manage priorities in tricky situations. He's a perfectionist by nature and likes to see things through to the end. Many employers would be lucky to have Adrien.</blockquote>
+            <footer><span class="feedback-co"><img src="./assets/logos/xxii.png" alt="XXII"></span><strong>Daniel Marques</strong><span>HR Director @ XXII · Oct 2014</span></footer>
+          </article>
+          <article class="feedback">
+            <blockquote>Adrien is a versatile person with remarkable talent in the graphic arts. At Apple, Adrien and I started together when the company was just launching on the French market, and he remains to this day one of the most open and professional people I know.</blockquote>
+            <footer><span class="feedback-co"><img src="./assets/logos/apple.png" alt="Apple"></span><strong>Tristan Darien</strong><span>Apple Trainer · Apr 2012</span></footer>
+          </article>
+        </div>
+        <div class="feedback-controls">
+          <button class="feedback-btn" data-action="prev" type="button" aria-label="Previous"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10 3 5 8l5 5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <button class="feedback-mode" data-action="toggle" type="button" aria-pressed="true"><span class="mode-dot"></span><span class="mode-label">Auto</span></button>
+          <button class="feedback-btn" data-action="next" type="button" aria-label="Next"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="m6 3 5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <div class="feedback-dots" role="tablist"></div>
+          <span class="feedback-count"><b>01</b> / 08</span>
+        </div>
+      </div>
     </aside>
 
-    <div id="overlay" aria-hidden="true">
-      <section id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
-        <button id="close-modal" class="close" type="button" aria-label="Close"><span></span><span></span></button>
-        <h2 id="modal-title">Colophon</h2>
-        <p>Static site built with HTML, CSS, and JavaScript. The visual panel is drawn in canvas to keep the page light and fluid.</p>
-        <p>Links are placeholders for now. The copy is direct on purpose, waiting for the real projects, real links, and two or three biographical details that feel less like sample data.</p>
-        <p class="updated">Last updated May 15, 2026.</p>
-      </section>
-    </div>
-
-    <script type="module" src="./script.js"></script>
+    <script src="./script.js" defer></script>
   </body>
 </html>
