@@ -13,13 +13,20 @@ const storedTheme = (() => {
 applyTheme(storedTheme || "dark");
 
 let audioCtx = null;
+let userHasInteracted = false;
+
 function ensureAudio() {
+  if (!userHasInteracted) return null;
   if (audioCtx) return audioCtx;
   const Ctx = window.AudioContext || window.webkitAudioContext;
   if (!Ctx) return null;
   audioCtx = new Ctx();
   return audioCtx;
 }
+
+["pointerdown", "keydown", "touchstart"].forEach((evt) => {
+  window.addEventListener(evt, () => { userHasInteracted = true; }, { once: true, capture: true });
+});
 
 function playToggleSound(toLight) {
   try {
@@ -538,7 +545,7 @@ document.querySelectorAll(".feedback-slider").forEach(initFeedbackSlider);
     });
   }
 
-  async function loadGallery(folder, max = 30) {
+  async function loadGallery(folder, max = 15) {
     if (cache[folder]) return cache[folder];
     const candidates = [];
     for (let i = 0; i <= max; i++) candidates.push("./assets/" + folder + "/" + i + ".jpg");
