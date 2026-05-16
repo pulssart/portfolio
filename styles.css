@@ -232,10 +232,10 @@ ol {
 .list-section li {
   counter-increment: item;
   display: flex;
-  align-items: flex-end;
+  align-items: flex-start;
   gap: 14px;
-  margin-bottom: 0.48rem;
-  padding: 2px 0;
+  margin-bottom: 0.8rem;
+  padding: 2px 0 4px;
 }
 
 .list-section li::before {
@@ -244,13 +244,16 @@ ol {
   color: var(--quiet);
   font-family: var(--mono);
   font-size: 0.64rem;
-  line-height: 1.8;
+  line-height: 1.65;
+}
+
+.item-copy {
+  flex: 1;
+  min-width: 0;
 }
 
 .list-section a {
-  display: flex;
-  flex: 1;
-  align-items: flex-end;
+  display: inline-flex;
   color: var(--text);
   font-family: var(--body);
   font-size: 1.05rem;
@@ -269,8 +272,17 @@ ol {
   transform: translateX(3px);
 }
 
+.item-copy p {
+  max-width: 42rem;
+  margin: 0.22rem 0 0;
+  color: var(--quiet);
+  font-size: 0.86rem;
+  line-height: 1.38;
+}
+
 .list-section span {
-  align-self: flex-end;
+  align-self: flex-start;
+  padding-top: 0.1rem;
   color: var(--muted);
   font-family: var(--mono);
   font-size: 0.75rem;
@@ -581,11 +593,17 @@ footer span:first-child,
   .list-section li {
     align-items: flex-start;
     gap: 12px;
+    margin-bottom: 1rem;
     padding: 3px 0;
   }
 
   .list-section a {
     font-size: 1.125rem;
+  }
+
+  .item-copy p {
+    max-width: 100%;
+    font-size: 0.82rem;
   }
 
   .list-section span {
