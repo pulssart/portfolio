@@ -312,6 +312,29 @@ ol {
   content: none;
 }
 
+.list-section a[target="_blank"]::after {
+  content: "";
+  display: inline-block;
+  width: 11px;
+  height: 11px;
+  margin-left: 6px;
+  vertical-align: 1px;
+  background-color: currentColor;
+  -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23000' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'><path d='M6 3h7v7'/><path d='M13 3 5 11'/></svg>");
+  mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23000' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'><path d='M6 3h7v7'/><path d='M13 3 5 11'/></svg>");
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  opacity: 0.6;
+  transition: opacity 180ms ease;
+}
+
+.list-section a[target="_blank"]:hover::after,
+.list-section li:hover a[target="_blank"]::after {
+  opacity: 1;
+}
+
 .list-section a:hover {
   color: var(--accent);
   text-decoration: none;
