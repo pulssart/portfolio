@@ -252,6 +252,37 @@ ol {
   min-width: 0;
 }
 
+.item-title {
+  display: flex;
+  align-items: center;
+  gap: 0.48rem;
+}
+
+.company-logo-frame {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.28rem;
+  height: 1.28rem;
+  border: 1px solid var(--line-soft);
+  border-radius: 0.38rem;
+  background: rgba(217, 214, 208, 0.06);
+  overflow: hidden;
+  flex: 0 0 auto;
+}
+
+.company-logo {
+  display: block;
+  max-width: 0.95rem;
+  max-height: 0.95rem;
+  object-fit: contain;
+}
+
+.company-logo-wide {
+  max-width: 1rem;
+  max-height: 0.48rem;
+}
+
 .list-section a {
   display: inline-flex;
   color: var(--text);
@@ -604,6 +635,11 @@ footer span:first-child,
   .item-copy p {
     max-width: 100%;
     font-size: 0.82rem;
+  }
+
+  .company-logo-frame {
+    width: 1.18rem;
+    height: 1.18rem;
   }
 
   .list-section span {
