@@ -1,0 +1,9 @@
+name = "adrien-health"
+main = "src/index.js"
+compatibility_date = "2025-01-01"
+
+# Replace `id` with the value returned by:
+#   wrangler kv namespace create HEALTH_KV
+[[kv_namespaces]]
+binding = "HEALTH_KV"
+id = "REPLACE_WITH_KV_ID"
