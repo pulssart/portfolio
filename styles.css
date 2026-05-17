@@ -1821,3 +1821,67 @@ html.party-mode::before {
   box-shadow: 0 0 10px rgba(127, 174, 183, 0.85);
   animation: status-blink 1.6s ease-in-out infinite;
 }
+
+.logo-row {
+  justify-content: flex-start;
+}
+
+.bpm-widget {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 28px;
+  padding: 0 14px 0 10px;
+  margin-left: auto;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--pill-bg);
+  color: var(--text);
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  --bpm: 72;
+}
+
+.bpm-widget[hidden] {
+  display: none;
+}
+
+.bpm-heart {
+  width: 14px;
+  height: 14px;
+  color: #ff3b5c;
+  filter: drop-shadow(0 0 6px rgba(255, 59, 92, 0.55));
+  animation: bpm-pulse calc(60s / var(--bpm)) ease-in-out infinite;
+  transform-origin: 50% 60%;
+}
+
+@keyframes bpm-pulse {
+  0%, 100% { transform: scale(1); }
+  18% { transform: scale(1.28); }
+  30% { transform: scale(1); }
+  46% { transform: scale(1.14); }
+  60% { transform: scale(1); }
+}
+
+.bpm-value {
+  color: var(--text);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0;
+}
+
+.bpm-unit {
+  color: var(--muted);
+  font-size: 0.62rem;
+}
+
+.bpm-widget.is-stale .bpm-heart {
+  animation-play-state: paused;
+  opacity: 0.4;
+}
+
+.bpm-widget.is-stale .bpm-value {
+  color: var(--muted);
+}

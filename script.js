@@ -1105,3 +1105,60 @@ function showToast(message, isError) {
     });
   });
 })();
+
+(function initPulsoidBPM() {
+  const widget = document.querySelector("#bpm-widget");
+  if (!widget) return;
+  const token = (widget.dataset.token || "").trim();
+  if (!token) return;
+  const valueEl = widget.querySelector(".bpm-value");
+
+  let ws = null;
+  let staleTimer = null;
+  let reconnectDelay = 1500;
+
+  function markStale() {
+    widget.classList.add("is-stale");
+  }
+
+  function setBpm(bpm) {
+    if (!bpm || bpm < 20 || bpm > 250) return;
+    widget.hidden = false;
+    widget.classList.remove("is-stale");
+    widget.style.setProperty("--bpm", String(bpm));
+    if (valueEl) valueEl.textContent = String(bpm);
+    if (staleTimer) clearTimeout(staleTimer);
+    staleTimer = setTimeout(markStale, 8000);
+  }
+
+  function connect() {
+    try {
+      ws = new WebSocket("wss://dev.pulsoid.net/api/v1/data/real_time?access_token=" + encodeURIComponent(token));
+    } catch (e) {
+      console.warn("Pulsoid: failed to open WebSocket", e);
+      scheduleReconnect();
+      return;
+    }
+    ws.addEventListener("open", () => {
+      reconnectDelay = 1500;
+      widget.hidden = false;
+    });
+    ws.addEventListener("message", (event) => {
+      try {
+        const msg = JSON.parse(event.data);
+        const bpm = (msg && msg.data && msg.data.heart_rate) || msg.heart_rate;
+        if (typeof bpm === "number") setBpm(bpm);
+      } catch (_) {}
+    });
+    ws.addEventListener("close", scheduleReconnect);
+    ws.addEventListener("error", () => { try { ws.close(); } catch (_) {} });
+  }
+
+  function scheduleReconnect() {
+    markStale();
+    setTimeout(connect, reconnectDelay);
+    reconnectDelay = Math.min(reconnectDelay * 1.6, 20000);
+  }
+
+  connect();
+})();
