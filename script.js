@@ -691,6 +691,7 @@ document.querySelectorAll(".feedback-slider").forEach(initFeedbackSlider);
   const videoInfoBtn = videoPlayer && videoPlayer.querySelector(".video-info-btn");
   const videoInfoPanel = videoPlayer && videoPlayer.querySelector(".video-info-panel");
   const videoSoundBtn = videoPlayer && videoPlayer.querySelector(".video-sound-btn");
+  const videoFeatureTag = videoPlayer && videoPlayer.querySelector(".video-feature-tag");
 
   function setVideoMuted(muted) {
     if (!videoIframe || !videoIframe.contentWindow) return;
@@ -744,6 +745,7 @@ document.querySelectorAll(".feedback-slider").forEach(initFeedbackSlider);
     const muteParam = muted ? "&mute=1" : "";
     videoIframe.src = "https://www.youtube-nocookie.com/embed/" + id + "?autoplay=1&playsinline=1&rel=0&modestbranding=1&showinfo=0&iv_load_policy=3&enablejsapi=1" + muteParam + "&" + ctrl;
     if (videoSoundBtn) videoSoundBtn.dataset.muted = String(muted);
+    if (videoFeatureTag) videoFeatureTag.hidden = !(opts && opts.featured);
     videoPlayer.hidden = false;
     portrait.classList.add("is-video");
     const hasInfo = !!(info && info.trim());
@@ -786,7 +788,7 @@ document.querySelectorAll(".feedback-slider").forEach(initFeedbackSlider);
   // Auto-open Alma on page load (muted, info panel collapsed)
   const almaLink = document.querySelector('[data-video="Dk3Fu_M4crs"]');
   if (almaLink) {
-    openVideo("Dk3Fu_M4crs", almaLink.dataset.videoInfo, { muted: true, showInfo: false });
+    openVideo("Dk3Fu_M4crs", almaLink.dataset.videoInfo, { muted: true, showInfo: false, featured: true });
   }
 
   closeBtn && closeBtn.addEventListener("click", close);

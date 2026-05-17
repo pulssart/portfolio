@@ -1786,3 +1786,38 @@ html.party-mode::before {
 .video-sound-btn[data-muted="true"] .icon-sound-off path {
   stroke: #ff6b6b;
 }
+
+.video-feature-tag {
+  position: absolute;
+  left: 22px;
+  bottom: 22px;
+  z-index: 3;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 14px 6px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  font-family: var(--mono);
+  font-size: 0.66rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.4);
+  animation: project-fade-in 380ms ease both;
+}
+
+.video-feature-tag[hidden] {
+  display: none;
+}
+
+.video-feature-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #7faeb7;
+  box-shadow: 0 0 10px rgba(127, 174, 183, 0.85);
+  animation: status-blink 1.6s ease-in-out infinite;
+}
