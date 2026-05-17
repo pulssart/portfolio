@@ -1766,3 +1766,23 @@ html.party-mode::before {
   width: 14px;
   height: 14px;
 }
+
+.video-sound-btn {
+  right: 106px !important;
+}
+
+.video-sound-btn .icon-sound-on {
+  display: none;
+}
+
+.video-sound-btn[data-muted="false"] .icon-sound-on {
+  display: block;
+}
+
+.video-sound-btn[data-muted="false"] .icon-sound-off {
+  display: none;
+}
+
+.video-sound-btn[data-muted="true"] .icon-sound-off path {
+  stroke: #ff6b6b;
+}

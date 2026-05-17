@@ -690,6 +690,23 @@ document.querySelectorAll(".feedback-slider").forEach(initFeedbackSlider);
   const videoClose = videoPlayer && videoPlayer.querySelector(".video-close");
   const videoInfoBtn = videoPlayer && videoPlayer.querySelector(".video-info-btn");
   const videoInfoPanel = videoPlayer && videoPlayer.querySelector(".video-info-panel");
+  const videoSoundBtn = videoPlayer && videoPlayer.querySelector(".video-sound-btn");
+
+  function setVideoMuted(muted) {
+    if (!videoIframe || !videoIframe.contentWindow) return;
+    const cmd = muted ? "mute" : "unMute";
+    try {
+      videoIframe.contentWindow.postMessage(JSON.stringify({ event: "command", func: cmd, args: [] }), "*");
+    } catch (_) {}
+    if (videoSoundBtn) videoSoundBtn.dataset.muted = String(muted);
+  }
+
+  if (videoSoundBtn) {
+    videoSoundBtn.addEventListener("click", () => {
+      const muted = videoSoundBtn.dataset.muted === "true";
+      setVideoMuted(!muted);
+    });
+  }
   if (videoInfoBtn) {
     videoInfoBtn.addEventListener("click", () => {
       const expanded = videoInfoBtn.getAttribute("aria-expanded") === "true";
@@ -722,8 +739,11 @@ document.querySelectorAll(".feedback-slider").forEach(initFeedbackSlider);
     close();
     clearActive();
     const withControls = opts && opts.controls;
+    const muted = !opts || opts.muted !== false;
     const ctrl = withControls ? "controls=1&fs=1&disablekb=0" : "controls=0&disablekb=1&fs=0";
-    videoIframe.src = "https://www.youtube-nocookie.com/embed/" + id + "?autoplay=1&playsinline=1&rel=0&modestbranding=1&showinfo=0&iv_load_policy=3&" + ctrl;
+    const muteParam = muted ? "&mute=1" : "";
+    videoIframe.src = "https://www.youtube-nocookie.com/embed/" + id + "?autoplay=1&playsinline=1&rel=0&modestbranding=1&showinfo=0&iv_load_policy=3&enablejsapi=1" + muteParam + "&" + ctrl;
+    if (videoSoundBtn) videoSoundBtn.dataset.muted = String(muted);
     videoPlayer.hidden = false;
     portrait.classList.add("is-video");
     const hasInfo = !!(info && info.trim());
@@ -761,6 +781,12 @@ document.querySelectorAll(".feedback-slider").forEach(initFeedbackSlider);
       openVideo(el.dataset.video, el.dataset.videoInfo, { controls: el.dataset.videoControls === "1" });
     });
   });
+
+  // Auto-open Alma on page load (muted)
+  const almaLink = document.querySelector('[data-video="Dk3Fu_M4crs"]');
+  if (almaLink) {
+    openVideo("Dk3Fu_M4crs", almaLink.dataset.videoInfo, { muted: true });
+  }
 
   closeBtn && closeBtn.addEventListener("click", close);
   infoBtn && infoBtn.addEventListener("click", () => {
