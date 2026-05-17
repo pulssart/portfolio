@@ -1280,6 +1280,135 @@ function showToast(message, isError) {
   connect();
 })();
 
+(function initWaterLiquid() {
+  const canvas = document.querySelector("[data-water-liquid]");
+  if (!canvas) return;
+  const card = canvas.closest(".health-card");
+  const ctx = canvas.getContext("2d");
+  if (!card || !ctx) return;
+
+  const state = {
+    width: 0,
+    height: 0,
+    level: 0.42,
+    targetLevel: 0.42,
+    wave: 0,
+    impulse: 0,
+    pointerX: 0.5,
+    pointerY: 0.5,
+    pointerActive: false,
+  };
+
+  function clamp(n, min, max) {
+    return Math.max(min, Math.min(max, n));
+  }
+
+  function resize() {
+    const rect = card.getBoundingClientRect();
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    state.width = Math.max(1, Math.round(rect.width));
+    state.height = Math.max(1, Math.round(rect.height));
+    canvas.width = Math.round(state.width * dpr);
+    canvas.height = Math.round(state.height * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+
+  function setWaterLevel(liters) {
+    const dailyGoal = 2.5;
+    state.targetLevel = clamp(liters / dailyGoal, 0.08, 0.92);
+  }
+
+  function movePointer(clientX, clientY) {
+    const rect = canvas.getBoundingClientRect();
+    state.pointerX = clamp((clientX - rect.left) / rect.width, 0, 1);
+    state.pointerY = clamp((clientY - rect.top) / rect.height, 0, 1);
+    state.impulse = Math.min(state.impulse + 0.9, 3.2);
+  }
+
+  card.addEventListener("pointerenter", (event) => {
+    resize();
+    state.pointerActive = true;
+    movePointer(event.clientX, event.clientY);
+  });
+  card.addEventListener("pointermove", (event) => {
+    state.pointerActive = true;
+    movePointer(event.clientX, event.clientY);
+  });
+  card.addEventListener("pointerleave", () => {
+    state.pointerActive = false;
+  });
+  document.addEventListener("adrien:water-level", (event) => {
+    const liters = event.detail && event.detail.liters;
+    if (typeof liters === "number") setWaterLevel(liters);
+  });
+
+  function draw() {
+    const w = state.width;
+    const h = state.height;
+    if (!w || !h) {
+      requestAnimationFrame(draw);
+      return;
+    }
+
+    state.level += (state.targetLevel - state.level) * 0.035;
+    state.wave += 0.018 + state.impulse * 0.002;
+    state.impulse *= 0.94;
+
+    ctx.clearRect(0, 0, w, h);
+
+    const fillTop = h * (1 - state.level);
+    const pointerPush = state.pointerActive ? (0.5 - state.pointerY) * 12 * state.impulse : 0;
+    const amp = 5 + state.impulse * 4;
+    const steps = 26;
+
+    function waveY(nx) {
+      const pointerDistance = Math.abs(nx - state.pointerX);
+      const localPush = Math.max(0, 1 - pointerDistance * 4) * pointerPush;
+      return fillTop +
+        Math.sin(nx * Math.PI * 2 + state.wave * 3.2) * amp +
+        Math.sin(nx * Math.PI * 4.6 - state.wave * 2.1) * (amp * 0.32) +
+        localPush;
+    }
+
+    const gradient = ctx.createLinearGradient(0, fillTop - 28, 0, h);
+    gradient.addColorStop(0, "rgba(86, 196, 216, 0.18)");
+    gradient.addColorStop(0.42, "rgba(86, 196, 216, 0.36)");
+    gradient.addColorStop(1, "rgba(86, 196, 216, 0.58)");
+
+    ctx.beginPath();
+    ctx.moveTo(0, h);
+    ctx.lineTo(0, waveY(0));
+    for (let i = 1; i <= steps; i += 1) {
+      const nx = i / steps;
+      ctx.lineTo(w * nx, waveY(nx));
+    }
+    ctx.lineTo(w, h);
+    ctx.closePath();
+    ctx.fillStyle = gradient;
+    ctx.fill();
+
+    ctx.beginPath();
+    for (let i = 0; i <= steps; i += 1) {
+      const nx = i / steps;
+      const x = w * nx;
+      const y = waveY(nx);
+      if (i === 0) ctx.moveTo(x, y);
+      else ctx.lineTo(x, y);
+    }
+    ctx.strokeStyle = "rgba(188, 238, 246, 0.45)";
+    ctx.lineWidth = 1;
+    ctx.stroke();
+
+    requestAnimationFrame(draw);
+  }
+
+  setWaterLevel(1.1);
+  resize();
+  if (window.ResizeObserver) new ResizeObserver(resize).observe(card);
+  else window.addEventListener("resize", resize);
+  requestAnimationFrame(draw);
+})();
+
 (function initHealthData() {
   const grid = document.querySelector(".health-grid");
   if (!grid) return;
@@ -1344,7 +1473,11 @@ function showToast(message, isError) {
     setText("[data-health-stand]", stand != null ? Math.round(stand) + "h" : null);
 
     const waterMl = d.dietary_water?.qty;
-    if (waterMl != null) setText("[data-health-water]", (waterMl / 1000).toFixed(1));
+    if (waterMl != null) {
+      const waterL = waterMl / 1000;
+      setText("[data-health-water]", waterL.toFixed(1));
+      document.dispatchEvent(new CustomEvent("adrien:water-level", { detail: { liters: waterL } }));
+    }
     setText("[data-health-daylight]", fmtInt(d.time_in_daylight?.qty));
 
     const wrist = d.apple_sleeping_wrist_temperature?.qty ?? d.wrist_temperature?.qty;

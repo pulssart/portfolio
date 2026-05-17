@@ -2160,6 +2160,25 @@ html.party-mode::before {
   transform: translateY(-1px);
 }
 
+.health-card > *:not(.water-liquid) {
+  position: relative;
+  z-index: 1;
+}
+
+.health-card[data-accent="wellness"] {
+  isolation: isolate;
+}
+
+.water-liquid {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.72;
+  pointer-events: none;
+}
+
 .health-card-head {
   display: flex;
   align-items: center;
