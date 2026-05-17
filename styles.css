@@ -1903,11 +1903,11 @@ html.party-mode::before {
   inset: 0;
   display: none;
   z-index: 2;
-  overflow-y: auto;
+  overflow: hidden;
   background:
-    radial-gradient(circle at 80% 0%, rgba(127, 174, 183, 0.18), transparent 22rem),
-    radial-gradient(circle at 12% 100%, rgba(255, 59, 92, 0.10), transparent 24rem),
-    #0d0d0c;
+    radial-gradient(circle at 80% 0%, var(--bg-glow-1), transparent 30rem),
+    radial-gradient(circle at 12% 100%, var(--bg-glow-2), transparent 30rem),
+    var(--panel);
   animation: project-fade-in 360ms ease both;
 }
 
@@ -1919,12 +1919,18 @@ html.party-mode::before {
 }
 
 .health-inner {
-  padding: 60px 44px 44px;
-  color: #f1ede4;
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 36px 36px 28px;
+  color: var(--text);
+  overflow-y: auto;
 }
 
 .health-header {
-  margin-bottom: 28px;
+  flex: 0 0 auto;
+  margin-bottom: 22px;
 }
 
 .health-eyebrow {
@@ -1932,11 +1938,12 @@ html.party-mode::before {
   align-items: center;
   gap: 8px;
   margin: 0 0 14px;
-  padding: 5px 12px 4px 10px;
-  border: 1px solid rgba(255, 255, 255, 0.18);
+  height: 26px;
+  padding: 0 12px 0 10px;
+  border: 1px solid var(--line);
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.06);
-  color: rgba(255, 255, 255, 0.85);
+  background: var(--pill-bg);
+  color: var(--muted);
   font-family: var(--mono);
   font-size: 0.62rem;
   text-transform: uppercase;
@@ -1955,67 +1962,70 @@ html.party-mode::before {
 .health-title {
   margin: 0 0 6px;
   font-family: var(--headline);
-  font-size: 1.7rem;
-  font-weight: 600;
+  font-size: clamp(1.6rem, 2.4vw, 2.1rem);
+  font-weight: 650;
   letter-spacing: -0.01em;
-  color: #fff;
+  color: var(--text);
 }
 
 .health-subtitle {
   margin: 0;
-  color: rgba(255, 255, 255, 0.55);
-  font-size: 0.85rem;
+  color: var(--muted);
   font-family: var(--mono);
+  font-size: 0.7rem;
   text-transform: uppercase;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.08em;
 }
 
 .health-grid {
+  flex: 1 1 auto;
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px;
+  grid-auto-rows: 1fr;
+  gap: 14px;
+  min-height: 0;
 }
 
 .health-card {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  padding: 18px 20px 16px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  justify-content: space-between;
+  gap: 14px;
+  padding: 22px 24px 20px;
+  border: 1px solid var(--line);
   border-radius: 14px;
-  background: rgba(255, 255, 255, 0.04);
-  backdrop-filter: blur(6px);
-  transition: border-color 220ms ease, transform 220ms ease;
+  background: var(--pill-bg);
+  transition: border-color 220ms ease, transform 220ms ease, background 220ms ease;
 }
 
 .health-card:hover {
-  border-color: rgba(255, 255, 255, 0.28);
+  border-color: var(--accent);
   transform: translateY(-1px);
 }
 
 .health-label {
-  color: rgba(255, 255, 255, 0.55);
+  color: var(--muted);
   font-family: var(--mono);
-  font-size: 0.62rem;
+  font-size: 0.64rem;
   text-transform: uppercase;
   letter-spacing: 0.1em;
 }
 
 .health-value {
-  color: #fff;
+  color: var(--text);
   font-family: var(--headline);
-  font-size: 1.7rem;
-  font-weight: 600;
+  font-size: clamp(1.6rem, 2.6vw, 2.2rem);
+  font-weight: 650;
   letter-spacing: -0.02em;
-  line-height: 1.1;
+  line-height: 1;
   display: inline-flex;
   align-items: baseline;
   gap: 6px;
 }
 
 .health-unit {
-  color: rgba(255, 255, 255, 0.5);
-  font-size: 0.78rem;
+  color: var(--muted);
+  font-size: 0.72rem;
   font-family: var(--mono);
   text-transform: uppercase;
   letter-spacing: 0.06em;
@@ -2023,17 +2033,19 @@ html.party-mode::before {
 }
 
 .health-meta {
-  color: rgba(255, 255, 255, 0.45);
+  color: var(--quiet);
   font-size: 0.7rem;
   font-family: var(--mono);
   letter-spacing: 0.02em;
 }
 
 .health-footer {
-  margin: 28px 0 0;
-  color: rgba(255, 255, 255, 0.4);
+  flex: 0 0 auto;
+  margin: 18px 0 0;
+  color: var(--quiet);
   font-size: 0.7rem;
-  font-style: italic;
+  font-family: var(--mono);
+  letter-spacing: 0.04em;
   line-height: 1.45;
 }
 
