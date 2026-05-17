@@ -526,7 +526,7 @@ document.querySelectorAll(".feedback-slider").forEach(initFeedbackSlider);
       role: "Side Project · Web",
       info: "Find promising leads before anyone starts searching for them.",
     },
-    "blur-and-colors": { title: "Blur and colors", role: "Digital art", info: "A series exploring soft focus, color fields, and the moment where shapes start to dissolve into pure light." },
+    "blur-and-colors": { title: "Blur and colors", role: "Digital art", folder: "blur", info: "A series exploring soft focus, color fields, and the moment where shapes start to dissolve into pure light." },
     minimal: { title: "Minimal", role: "Digital art", info: "Strict reduction: a few shapes, a few lines, a lot of breathing room." },
     splatters: { title: "Splatters", role: "Digital art", info: "Controlled chaos — drips, splashes, and accidents shaped into composition." },
     "flower-beauty": { title: "Flower beauty", role: "Digital art", info: "Botanical close-ups treated with the patience of a still life." },
@@ -627,7 +627,7 @@ document.querySelectorAll(".feedback-slider").forEach(initFeedbackSlider);
   async function open(key) {
     const proj = projects[key];
     if (!proj) return;
-    let urls = await loadGallery(key);
+    let urls = await loadGallery(proj.folder || key);
     if (key === "buska") urls = urls.slice().reverse();
     if (!urls.length) {
       console.warn("No images found in ./assets/" + key + "/ (expected 1.jpg, 2.jpg, ...)");
