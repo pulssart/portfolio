@@ -230,8 +230,11 @@
                 <span class="health-value"><span data-live-bpm>72</span><span class="health-unit">BPM</span></span>
               </div>
               <span class="health-meta">Resting <span data-health-resting>—</span></span>
-              <svg class="health-spark" viewBox="0 0 100 28" preserveAspectRatio="none" aria-hidden="true">
-                <path d="M0,18 L10,18 L13,18 L16,8 L18,24 L21,18 L40,18 L43,18 L46,5 L48,26 L51,18 L72,18 L75,18 L78,10 L80,22 L83,18 L100,18" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+              <svg class="health-spark health-spark--ecg" viewBox="0 0 100 28" preserveAspectRatio="none" aria-hidden="true">
+                <g class="ecg-loop">
+                  <path d="M0,18 L18,18 L20,18 L22,8 L24,24 L26,18 L48,18 L50,18 L52,3 L54,26 L56,18 L78,18 L80,18 L82,11 L84,22 L86,18 L100,18 L118,18 L120,18 L122,8 L124,24 L126,18 L148,18 L150,18 L152,3 L154,26 L156,18 L178,18 L180,18 L182,11 L184,22 L186,18 L200,18" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+                </g>
+                <circle class="ecg-pulse" cx="86" cy="18" r="1.5" fill="currentColor"/>
               </svg>
             </article>
             <article class="health-card" data-accent="sleep">

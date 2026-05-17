@@ -2112,6 +2112,34 @@ html.party-mode::before {
   pointer-events: none;
 }
 
+.health-spark--ecg {
+  overflow: visible;
+  opacity: 0.85;
+}
+
+.health-spark--ecg .ecg-loop {
+  animation: ecg-scroll calc(60s / var(--bpm, 70)) linear infinite;
+  transform-origin: 0 0;
+}
+
+@keyframes ecg-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-100px); }
+}
+
+.health-spark--ecg .ecg-pulse {
+  filter: drop-shadow(0 0 4px var(--accent-color));
+  animation: ecg-pulse calc(60s / var(--bpm, 70)) ease-in-out infinite;
+}
+
+@keyframes ecg-pulse {
+  0%, 80%, 100% { r: 1.4; opacity: 0.55; }
+  10% { r: 2.6; opacity: 1; }
+  30% { r: 1.4; opacity: 0.55; }
+  50% { r: 2.2; opacity: 0.95; }
+  60% { r: 1.4; opacity: 0.55; }
+}
+
 .health-card:hover .health-spark {
   opacity: 0.9;
 }

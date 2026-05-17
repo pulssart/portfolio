@@ -1218,6 +1218,7 @@ function showToast(message, isError) {
     widget.hidden = false;
     widget.classList.remove("is-stale");
     widget.style.setProperty("--bpm", String(bpm));
+    document.documentElement.style.setProperty("--bpm", String(bpm));
     if (valueEl) valueEl.textContent = String(bpm);
     if (liveBpmEl) liveBpmEl.textContent = String(bpm);
   }

@@ -41,6 +41,16 @@ export default {
       return json({ ok: true, mergedKeys: Object.keys(merged).length });
     }
 
+    if (url.pathname === "/reset" && method === "POST") {
+      const expected = env.PUSH_TOKEN;
+      if (expected) {
+        const auth = request.headers.get("Authorization") || "";
+        if (auth !== "Bearer " + expected) return json({ error: "unauthorized" }, 401);
+      }
+      await env.HEALTH_KV.delete("health:latest");
+      return json({ ok: true, reset: true });
+    }
+
     if (url.pathname === "/health" && method === "GET") {
       const raw = await env.HEALTH_KV.get("health:latest");
       const data = raw ? JSON.parse(raw) : {};
@@ -108,28 +118,36 @@ function mergeMetrics(existing, payload) {
     if (!m || !m.name || !Array.isArray(m.data) || !m.data.length) continue;
 
     if (CUMULATIVE.has(m.name)) {
-      // Sum today's samples only, with a daily reset
-      let total = 0;
-      let count = 0;
-      let latestDate = null;
+      // De-duplicating cumulative sum: only count samples strictly newer than what we've seen
+      const prev = existing[m.name] || {};
+      const lastSeenMs = prev.lastSampleDate ? Date.parse(prev.lastSampleDate) : 0;
+      let storedDay = prev.day;
+      let storedTotal = prev.qty || 0;
+      let storedSamples = prev.samples || 0;
+      let latestDate = prev.lastSampleDate || null;
+
       for (const entry of m.data) {
-        if (typeof entry.qty !== "number") continue;
-        if (!isToday(entry.date)) continue;
-        total += entry.qty;
-        count += 1;
-        if (!latestDate || Date.parse(entry.date) > Date.parse(latestDate)) latestDate = entry.date;
+        if (typeof entry.qty !== "number" || !entry.date) continue;
+        const t = Date.parse(entry.date);
+        if (Number.isNaN(t)) continue;
+        if (t <= lastSeenMs) continue;
+        const day = new Date(t).toISOString().slice(0, 10);
+        if (day !== storedDay) {
+          storedDay = day;
+          storedTotal = 0;
+          storedSamples = 0;
+        }
+        storedTotal += entry.qty;
+        storedSamples += 1;
+        if (!latestDate || t > Date.parse(latestDate)) latestDate = entry.date;
       }
-      // Merge with stored same-day total
-      const prev = existing[m.name];
-      const prevSameDay = prev && prev.day === today ? prev.qty || 0 : 0;
-      const merged = prevSameDay + total;
-      if (count === 0 && !prev) continue;
+
       out[m.name] = {
-        qty: count > 0 ? merged : prev ? prev.qty : 0,
-        day: today,
-        date: latestDate || (prev && prev.date) || null,
-        units: m.units || (prev && prev.units),
-        samples: (prev && prev.day === today ? prev.samples || 0 : 0) + count,
+        qty: storedTotal,
+        day: storedDay || today,
+        lastSampleDate: latestDate,
+        samples: storedSamples,
+        units: m.units || prev.units,
       };
       continue;
     }
