@@ -142,8 +142,8 @@ document.querySelectorAll(".list-section li").forEach((li) => {
   });
 });
 
-(function initRoleTooltip() {
-  const items = document.querySelectorAll(".list-section li[data-role]");
+(function initCursorTooltip() {
+  const items = document.querySelectorAll(".list-section li[data-role], [data-tooltip]");
   if (!items.length) return;
   const tip = document.createElement("div");
   tip.className = "role-tooltip";
@@ -160,23 +160,29 @@ document.querySelectorAll(".list-section li").forEach((li) => {
     tip.style.transform = "translate3d(" + (x + 16) + "px, " + (y + 18) + "px, 0)";
   }
 
-  items.forEach((li) => {
-    li.addEventListener("pointerenter", (e) => {
-      active = li;
-      tip.textContent = li.dataset.role;
+  function textFor(el) {
+    return el.dataset.tooltip || el.dataset.role || "";
+  }
+
+  items.forEach((el) => {
+    el.addEventListener("pointerenter", (e) => {
+      const text = textFor(el);
+      if (!text) return;
+      active = el;
+      tip.textContent = text;
       x = e.clientX;
       y = e.clientY;
       placeTip();
       tip.classList.add("is-visible");
     });
-    li.addEventListener("pointermove", (e) => {
-      if (active !== li) return;
+    el.addEventListener("pointermove", (e) => {
+      if (active !== el) return;
       x = e.clientX;
       y = e.clientY;
       if (!raf) raf = requestAnimationFrame(placeTip);
     });
-    li.addEventListener("pointerleave", () => {
-      if (active === li) {
+    el.addEventListener("pointerleave", () => {
+      if (active === el) {
         tip.classList.remove("is-visible");
         active = null;
       }
