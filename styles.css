@@ -1853,7 +1853,7 @@ html.party-mode::before {
   height: 14px;
   color: #ff3b5c;
   filter: drop-shadow(0 0 6px rgba(255, 59, 92, 0.55));
-  animation: bpm-pulse calc(60s / var(--bpm)) ease-in-out infinite;
+  animation: bpm-pulse calc(120s / var(--bpm)) ease-in-out infinite;
   transform-origin: 50% 60%;
 }
 
@@ -2112,13 +2112,17 @@ html.party-mode::before {
   pointer-events: none;
 }
 
+.health-card[data-accent="heart"] .health-spark {
+  bottom: 12px;
+}
+
 .health-spark--ecg {
   overflow: visible;
   opacity: 0.85;
 }
 
 .health-spark--ecg .ecg-loop {
-  animation: ecg-scroll calc(60s / var(--bpm, 70)) linear infinite;
+  animation: ecg-scroll calc(150s / var(--bpm, 70)) linear infinite;
   transform-origin: 0 0;
 }
 
@@ -2129,7 +2133,7 @@ html.party-mode::before {
 
 .health-spark--ecg .ecg-pulse {
   filter: drop-shadow(0 0 4px var(--accent-color));
-  animation: ecg-pulse calc(60s / var(--bpm, 70)) ease-in-out infinite;
+  animation: ecg-pulse calc(150s / var(--bpm, 70)) ease-in-out infinite;
 }
 
 @keyframes ecg-pulse {
