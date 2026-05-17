@@ -2081,11 +2081,19 @@ html.party-mode::before {
 }
 
 .health-meta {
-  color: var(--quiet);
-  font-size: 0.68rem;
+  display: grid;
+  gap: 4px;
+  color: var(--muted);
+  font-size: 0.78rem;
   font-family: var(--mono);
   letter-spacing: 0.02em;
   margin-bottom: 10px;
+  line-height: 1.35;
+}
+
+.health-meta-line {
+  display: block;
+  white-space: nowrap;
 }
 
 .health-spark {
