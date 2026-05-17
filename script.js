@@ -688,6 +688,16 @@ document.querySelectorAll(".feedback-slider").forEach(initFeedbackSlider);
   const videoIframe = videoPlayer && videoPlayer.querySelector("iframe");
   const videoFrame = videoPlayer && videoPlayer.querySelector(".video-frame");
   const videoClose = videoPlayer && videoPlayer.querySelector(".video-close");
+  const videoInfoBtn = videoPlayer && videoPlayer.querySelector(".video-info-btn");
+  const videoInfoPanel = videoPlayer && videoPlayer.querySelector(".video-info-panel");
+  if (videoInfoBtn) {
+    videoInfoBtn.addEventListener("click", () => {
+      const expanded = videoInfoBtn.getAttribute("aria-expanded") === "true";
+      playExpandSound(!expanded);
+      videoInfoBtn.setAttribute("aria-expanded", String(!expanded));
+      if (videoInfoPanel) videoInfoPanel.hidden = expanded;
+    });
+  }
   const videoAspect = 16 / 9;
 
   function fitVideo() {
@@ -711,9 +721,11 @@ document.querySelectorAll(".feedback-slider").forEach(initFeedbackSlider);
     if (!videoIframe) return;
     close();
     clearActive();
-    videoIframe.src = "https://www.youtube.com/embed/" + id + "?autoplay=1&playsinline=1&rel=0&modestbranding=1";
+    videoIframe.src = "https://www.youtube-nocookie.com/embed/" + id + "?autoplay=1&playsinline=1&rel=0&modestbranding=1&controls=0&showinfo=0&iv_load_policy=3&disablekb=1&fs=0";
     videoPlayer.hidden = false;
     portrait.classList.add("is-video");
+    if (videoInfoBtn) videoInfoBtn.setAttribute("aria-expanded", "true");
+    if (videoInfoPanel) videoInfoPanel.hidden = false;
     requestAnimationFrame(fitVideo);
   }
 
