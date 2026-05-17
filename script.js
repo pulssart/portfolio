@@ -1109,7 +1109,21 @@ function showToast(message, isError) {
 (function initPulsoidBPM() {
   const widget = document.querySelector("#bpm-widget");
   if (!widget) return;
-  const token = (widget.dataset.token || "").trim();
+
+  // Capture OAuth implicit-flow token from URL hash, store, clean URL
+  if (window.location.hash && window.location.hash.indexOf("access_token=") !== -1) {
+    const params = new URLSearchParams(window.location.hash.slice(1));
+    const tok = params.get("access_token");
+    if (tok) {
+      try { localStorage.setItem("pulsoid_token", tok); } catch (_) {}
+      history.replaceState(null, "", window.location.pathname + window.location.search);
+    }
+  }
+
+  let token = (widget.dataset.token || "").trim();
+  if (!token) {
+    try { token = localStorage.getItem("pulsoid_token") || ""; } catch (_) {}
+  }
   if (!token) return;
   const valueEl = widget.querySelector(".bpm-value");
 
