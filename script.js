@@ -649,6 +649,62 @@ document.querySelectorAll(".feedback-slider").forEach(initFeedbackSlider);
     if (videoPlayer) videoPlayer.hidden = true;
   }
 
+  const healthPanel = portrait.querySelector(".health-stats");
+  const healthCloseBtn = healthPanel && healthPanel.querySelector(".health-close");
+
+  function silentCloseHealth() {
+    if (!portrait.classList.contains("is-health")) return;
+    portrait.classList.remove("is-health");
+    if (healthPanel) healthPanel.hidden = true;
+  }
+
+  function openHealth() {
+    if (!healthPanel) return;
+    silentCloseVideo();
+    silentCloseProjectIfAny();
+    healthPanel.hidden = false;
+    portrait.classList.add("is-health");
+  }
+
+  function silentCloseProjectIfAny() {
+    if (!portrait.classList.contains("is-project")) return;
+    stopAuto();
+    portrait.classList.remove("is-project");
+    clearActive();
+    if (slideshow) slideshow.hidden = true;
+  }
+
+  if (healthCloseBtn) {
+    healthCloseBtn.addEventListener("click", () => {
+      playCloseSound();
+      silentCloseHealth();
+    });
+  }
+
+  const bpmPill = document.querySelector("#bpm-widget");
+  if (bpmPill) {
+    bpmPill.setAttribute("role", "button");
+    bpmPill.setAttribute("tabindex", "0");
+    bpmPill.addEventListener("click", () => {
+      playOpenSound();
+      openHealth();
+    });
+    bpmPill.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        playOpenSound();
+        openHealth();
+      }
+    });
+  }
+
+  window.addEventListener("keydown", (e) => {
+    if (portrait.classList.contains("is-health") && e.key === "Escape") {
+      playCloseSound();
+      silentCloseHealth();
+    }
+  });
+
   async function open(key) {
     const proj = projects[key];
     if (!proj) return;
@@ -659,6 +715,7 @@ document.querySelectorAll(".feedback-slider").forEach(initFeedbackSlider);
       return;
     }
     silentCloseVideo();
+    silentCloseHealth();
     if (titleEl) titleEl.textContent = proj.title;
     if (roleEl) roleEl.textContent = proj.role;
     if (infoText) infoText.textContent = proj.info || "";
@@ -760,6 +817,7 @@ document.querySelectorAll(".feedback-slider").forEach(initFeedbackSlider);
   function openVideo(id, info, opts) {
     if (!videoIframe) return;
     silentCloseProject();
+    silentCloseHealth();
     const withControls = opts && opts.controls;
     const muted = !opts || opts.muted !== false;
     const ctrl = withControls ? "controls=1&fs=1&disablekb=0" : "controls=0&disablekb=1&fs=0";
@@ -1154,11 +1212,14 @@ function showToast(message, isError) {
   let fallbackBpm = 70 + Math.floor(Math.random() * 8);
   let isLive = false;
 
+  const liveBpmEl = document.querySelector("[data-live-bpm]");
+
   function render(bpm) {
     widget.hidden = false;
     widget.classList.remove("is-stale");
     widget.style.setProperty("--bpm", String(bpm));
     if (valueEl) valueEl.textContent = String(bpm);
+    if (liveBpmEl) liveBpmEl.textContent = String(bpm);
   }
 
   function tickFallback() {
