@@ -553,10 +553,22 @@ document.querySelectorAll(".feedback-slider").forEach(initFeedbackSlider);
 
   async function loadGallery(folder, max = 15) {
     if (cache[folder]) return cache[folder];
+    const exts = ["jpg", "jpeg", "png", "webp"];
     const candidates = [];
-    for (let i = 0; i <= max; i++) candidates.push("./assets/" + folder + "/" + i + ".jpg");
+    for (let i = 0; i <= max; i++) {
+      exts.forEach((ext) => candidates.push("./assets/" + folder + "/" + i + "." + ext));
+    }
     const checks = await Promise.all(candidates.map(probeImage));
-    const found = candidates.filter((_, i) => checks[i]);
+    const seen = new Set();
+    const found = [];
+    candidates.forEach((url, i) => {
+      if (!checks[i]) return;
+      const m = url.match(/\/(\d+)\.[^/]+$/);
+      const key = m ? m[1] : url;
+      if (seen.has(key)) return;
+      seen.add(key);
+      found.push(url);
+    });
     cache[folder] = found;
     return found;
   }
