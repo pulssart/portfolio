@@ -747,13 +747,14 @@ document.querySelectorAll(".feedback-slider").forEach(initFeedbackSlider);
     videoPlayer.hidden = false;
     portrait.classList.add("is-video");
     const hasInfo = !!(info && info.trim());
+    const showInfo = hasInfo && (!opts || opts.showInfo !== false);
     if (videoInfoPanel) {
       const textEl = videoInfoPanel.querySelector(".project-info-text");
       if (textEl) textEl.textContent = info || "";
-      videoInfoPanel.hidden = !hasInfo;
+      videoInfoPanel.hidden = !showInfo;
     }
     if (videoInfoBtn) {
-      videoInfoBtn.setAttribute("aria-expanded", String(hasInfo));
+      videoInfoBtn.setAttribute("aria-expanded", String(showInfo));
       videoInfoBtn.hidden = !hasInfo;
     }
     requestAnimationFrame(fitVideo);
@@ -782,10 +783,10 @@ document.querySelectorAll(".feedback-slider").forEach(initFeedbackSlider);
     });
   });
 
-  // Auto-open Alma on page load (muted)
+  // Auto-open Alma on page load (muted, info panel collapsed)
   const almaLink = document.querySelector('[data-video="Dk3Fu_M4crs"]');
   if (almaLink) {
-    openVideo("Dk3Fu_M4crs", almaLink.dataset.videoInfo, { muted: true });
+    openVideo("Dk3Fu_M4crs", almaLink.dataset.videoInfo, { muted: true, showInfo: false });
   }
 
   closeBtn && closeBtn.addEventListener("click", close);
