@@ -1904,18 +1904,8 @@ html.party-mode::before {
   display: none;
   z-index: 2;
   overflow: hidden;
-  background:
-    radial-gradient(circle at 85% 0%, rgba(255, 94, 109, 0.06), transparent 22rem),
-    radial-gradient(circle at 5% 95%, rgba(108, 142, 255, 0.06), transparent 22rem),
-    var(--panel);
+  background: var(--panel);
   animation: project-fade-in 360ms ease both;
-}
-
-[data-theme="light"] .health-stats {
-  background:
-    radial-gradient(circle at 85% 0%, rgba(255, 94, 109, 0.10), transparent 22rem),
-    radial-gradient(circle at 5% 95%, rgba(108, 142, 255, 0.10), transparent 22rem),
-    var(--panel);
 }
 
 .health-close {
