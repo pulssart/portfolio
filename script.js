@@ -717,11 +717,13 @@ document.querySelectorAll(".feedback-slider").forEach(initFeedbackSlider);
     videoIframe.style.top = ((ch - h) / 2) + "px";
   }
 
-  function openVideo(id, info) {
+  function openVideo(id, info, opts) {
     if (!videoIframe) return;
     close();
     clearActive();
-    videoIframe.src = "https://www.youtube-nocookie.com/embed/" + id + "?autoplay=1&playsinline=1&rel=0&modestbranding=1&controls=0&showinfo=0&iv_load_policy=3&disablekb=1&fs=0";
+    const withControls = opts && opts.controls;
+    const ctrl = withControls ? "controls=1&fs=1&disablekb=0" : "controls=0&disablekb=1&fs=0";
+    videoIframe.src = "https://www.youtube-nocookie.com/embed/" + id + "?autoplay=1&playsinline=1&rel=0&modestbranding=1&showinfo=0&iv_load_policy=3&" + ctrl;
     videoPlayer.hidden = false;
     portrait.classList.add("is-video");
     const hasInfo = !!(info && info.trim());
@@ -756,7 +758,7 @@ document.querySelectorAll(".feedback-slider").forEach(initFeedbackSlider);
     el.addEventListener("click", (e) => {
       e.preventDefault();
       playOpenSound();
-      openVideo(el.dataset.video, el.dataset.videoInfo);
+      openVideo(el.dataset.video, el.dataset.videoInfo, { controls: el.dataset.videoControls === "1" });
     });
   });
 
