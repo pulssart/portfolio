@@ -1317,8 +1317,20 @@ function showToast(message, isError) {
     return hours + ":" + String(min).padStart(2, "0");
   }
 
+  function fmtSince(iso) {
+    if (!iso) return null;
+    const t = Date.parse(iso);
+    if (Number.isNaN(t)) return null;
+    const diffSec = Math.max(0, Math.floor((Date.now() - t) / 1000));
+    if (diffSec < 60) return "just now";
+    if (diffSec < 3600) return Math.floor(diffSec / 60) + " min ago";
+    if (diffSec < 86400) return Math.floor(diffSec / 3600) + " h ago";
+    return Math.floor(diffSec / 86400) + " d ago";
+  }
+
   function apply(d) {
     if (!d) return;
+    setText("[data-health-updated]", fmtSince(d.updatedAt));
     setText("[data-health-resting]", fmtInt(d.resting_heart_rate?.qty));
     setText("[data-health-vo2]", d.vo2_max?.qty ? d.vo2_max.qty.toFixed(1) : null);
     setText("[data-health-hrv]", fmtInt(d.heart_rate_variability?.qty));

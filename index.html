@@ -213,40 +213,93 @@
         </button>
         <div class="health-inner">
           <header class="health-header">
-            <span class="health-eyebrow"><span class="health-pulse"></span> Live status</span>
+            <div class="health-header-top">
+              <span class="health-eyebrow"><span class="health-pulse"></span> Live status</span>
+              <span class="health-sync">Last sync · <span data-health-updated>—</span></span>
+            </div>
             <h3 class="health-title">Adrien, last 24h</h3>
             <p class="health-subtitle">From Apple Watch · auto-synced</p>
           </header>
           <div class="health-grid" data-health-api="https://adrien-health.pulssart.workers.dev/health">
-            <article class="health-card">
-              <span class="health-label">Heart rate</span>
-              <span class="health-value"><span data-live-bpm>72</span><span class="health-unit">BPM</span></span>
-              <span class="health-meta">Live · resting <span data-health-resting>—</span></span>
+            <article class="health-card" data-accent="heart">
+              <header class="health-card-head">
+                <span class="health-label">Heart rate</span>
+                <span class="health-pill">Live</span>
+              </header>
+              <div class="health-value-row">
+                <span class="health-value"><span data-live-bpm>72</span><span class="health-unit">BPM</span></span>
+              </div>
+              <span class="health-meta">Resting <span data-health-resting>—</span></span>
+              <svg class="health-spark" viewBox="0 0 100 28" preserveAspectRatio="none" aria-hidden="true">
+                <path d="M0,18 L10,18 L13,18 L16,8 L18,24 L21,18 L40,18 L43,18 L46,5 L48,26 L51,18 L72,18 L75,18 L78,10 L80,22 L83,18 L100,18" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
             </article>
-            <article class="health-card">
-              <span class="health-label">Sleep last night</span>
-              <span class="health-value" data-health-sleep-total>—</span>
+            <article class="health-card" data-accent="sleep">
+              <header class="health-card-head">
+                <span class="health-label">Sleep last night</span>
+                <span class="health-pill">REM</span>
+              </header>
+              <div class="health-value-row">
+                <span class="health-value" data-health-sleep-total>—</span>
+              </div>
               <span class="health-meta">REM <span data-health-sleep-rem>—</span> · Deep <span data-health-sleep-deep>—</span> · Core <span data-health-sleep-core>—</span></span>
+              <svg class="health-spark" viewBox="0 0 100 28" preserveAspectRatio="none" aria-hidden="true">
+                <path d="M0,12 C10,12 12,22 22,22 C32,22 34,8 44,8 C54,8 56,22 66,22 C76,22 78,12 88,12 L100,12" fill="none" stroke="currentColor" stroke-width="1.2"/>
+              </svg>
             </article>
-            <article class="health-card">
-              <span class="health-label">Activity</span>
-              <span class="health-value"><span data-health-steps>—</span> <span class="health-unit">steps</span></span>
+            <article class="health-card" data-accent="activity">
+              <header class="health-card-head">
+                <span class="health-label">Activity</span>
+                <span class="health-pill">Today</span>
+              </header>
+              <div class="health-value-row">
+                <span class="health-value"><span data-health-steps>—</span> <span class="health-unit">steps</span></span>
+              </div>
               <span class="health-meta"><span data-health-distance>—</span> · stand <span data-health-stand>—</span></span>
+              <svg class="health-spark" viewBox="0 0 100 28" preserveAspectRatio="none" aria-hidden="true">
+                <g fill="currentColor">
+                  <rect x="2" y="20" width="3" height="6"/><rect x="9" y="14" width="3" height="12"/><rect x="16" y="16" width="3" height="10"/><rect x="23" y="10" width="3" height="16"/><rect x="30" y="18" width="3" height="8"/><rect x="37" y="6" width="3" height="20"/><rect x="44" y="12" width="3" height="14"/><rect x="51" y="9" width="3" height="17"/><rect x="58" y="15" width="3" height="11"/><rect x="65" y="8" width="3" height="18"/><rect x="72" y="13" width="3" height="13"/><rect x="79" y="17" width="3" height="9"/><rect x="86" y="11" width="3" height="15"/><rect x="93" y="20" width="3" height="6"/>
+                </g>
+              </svg>
             </article>
-            <article class="health-card">
-              <span class="health-label">Wellness</span>
-              <span class="health-value"><span data-health-water>—</span> <span class="health-unit">L</span></span>
+            <article class="health-card" data-accent="wellness">
+              <header class="health-card-head">
+                <span class="health-label">Wellness</span>
+                <span class="health-pill">24h</span>
+              </header>
+              <div class="health-value-row">
+                <span class="health-value"><span data-health-water>—</span> <span class="health-unit">L water</span></span>
+              </div>
               <span class="health-meta"><span data-health-daylight>—</span> min daylight · <span data-health-wrist>—</span> wrist</span>
+              <svg class="health-spark" viewBox="0 0 100 28" preserveAspectRatio="none" aria-hidden="true">
+                <path d="M0,20 Q15,8 30,16 T60,14 T100,12" fill="none" stroke="currentColor" stroke-width="1.2"/>
+              </svg>
             </article>
-            <article class="health-card">
-              <span class="health-label">VO₂ max</span>
-              <span class="health-value" data-health-vo2>—</span>
-              <span class="health-meta">mL/kg·min</span>
+            <article class="health-card" data-accent="vo2">
+              <header class="health-card-head">
+                <span class="health-label">VO₂ max</span>
+                <span class="health-pill">7d</span>
+              </header>
+              <div class="health-value-row">
+                <span class="health-value"><span data-health-vo2>—</span><span class="health-unit">mL/kg</span></span>
+              </div>
+              <span class="health-meta">Cardio fitness · above average</span>
+              <svg class="health-spark" viewBox="0 0 100 28" preserveAspectRatio="none" aria-hidden="true">
+                <path d="M0,22 L20,20 L40,16 L60,14 L80,9 L100,7" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+              </svg>
             </article>
-            <article class="health-card">
-              <span class="health-label">HRV</span>
-              <span class="health-value"><span data-health-hrv>—</span> <span class="health-unit">ms</span></span>
-              <span class="health-meta">7-day average</span>
+            <article class="health-card" data-accent="hrv">
+              <header class="health-card-head">
+                <span class="health-label">HRV</span>
+                <span class="health-pill">avg</span>
+              </header>
+              <div class="health-value-row">
+                <span class="health-value"><span data-health-hrv>—</span><span class="health-unit">ms</span></span>
+              </div>
+              <span class="health-meta">Heart rate variability</span>
+              <svg class="health-spark" viewBox="0 0 100 28" preserveAspectRatio="none" aria-hidden="true">
+                <path d="M0,16 C12,4 18,24 28,14 C38,4 44,22 56,12 C68,2 74,22 86,12 C92,8 96,18 100,14" fill="none" stroke="currentColor" stroke-width="1.2"/>
+              </svg>
             </article>
           </div>
           <p class="health-footer">Synced from Apple Watch via Health Auto Export. Some metrics may lag a few minutes.</p>

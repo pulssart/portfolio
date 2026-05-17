@@ -1905,10 +1905,17 @@ html.party-mode::before {
   z-index: 2;
   overflow: hidden;
   background:
-    radial-gradient(circle at 80% 0%, var(--bg-glow-1), transparent 30rem),
-    radial-gradient(circle at 12% 100%, var(--bg-glow-2), transparent 30rem),
+    radial-gradient(circle at 85% 0%, rgba(255, 94, 109, 0.06), transparent 22rem),
+    radial-gradient(circle at 5% 95%, rgba(108, 142, 255, 0.06), transparent 22rem),
     var(--panel);
   animation: project-fade-in 360ms ease both;
+}
+
+[data-theme="light"] .health-stats {
+  background:
+    radial-gradient(circle at 85% 0%, rgba(255, 94, 109, 0.10), transparent 22rem),
+    radial-gradient(circle at 5% 95%, rgba(108, 142, 255, 0.10), transparent 22rem),
+    var(--panel);
 }
 
 .health-close {
@@ -1923,21 +1930,28 @@ html.party-mode::before {
   inset: 0;
   display: flex;
   flex-direction: column;
-  padding: 36px 36px 28px;
+  padding: 32px 32px 24px;
   color: var(--text);
   overflow-y: auto;
 }
 
 .health-header {
   flex: 0 0 auto;
-  margin-bottom: 22px;
+  margin-bottom: 20px;
+}
+
+.health-header-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
 }
 
 .health-eyebrow {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  margin: 0 0 14px;
   height: 26px;
   padding: 0 12px 0 10px;
   border: 1px solid var(--line);
@@ -1950,6 +1964,14 @@ html.party-mode::before {
   letter-spacing: 0.1em;
 }
 
+.health-sync {
+  color: var(--quiet);
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
 .health-pulse {
   width: 7px;
   height: 7px;
@@ -1960,11 +1982,11 @@ html.party-mode::before {
 }
 
 .health-title {
-  margin: 0 0 6px;
+  margin: 0 0 4px;
   font-family: var(--headline);
-  font-size: clamp(1.6rem, 2.4vw, 2.1rem);
+  font-size: clamp(1.5rem, 2.2vw, 1.9rem);
   font-weight: 650;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.015em;
   color: var(--text);
 }
 
@@ -1972,7 +1994,7 @@ html.party-mode::before {
   margin: 0;
   color: var(--muted);
   font-family: var(--mono);
-  font-size: 0.7rem;
+  font-size: 0.68rem;
   text-transform: uppercase;
   letter-spacing: 0.08em;
 }
@@ -1982,41 +2004,77 @@ html.party-mode::before {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   grid-auto-rows: 1fr;
-  gap: 14px;
+  gap: 12px;
   min-height: 0;
 }
 
+/* Per-metric accent (color hint via CSS var) */
+.health-card { --accent-color: var(--muted); }
+.health-card[data-accent="heart"]    { --accent-color: #ff5e6d; }
+.health-card[data-accent="sleep"]    { --accent-color: #6c8eff; }
+.health-card[data-accent="activity"] { --accent-color: #34d28a; }
+.health-card[data-accent="wellness"] { --accent-color: #56c4d8; }
+.health-card[data-accent="vo2"]      { --accent-color: #ffa552; }
+.health-card[data-accent="hrv"]      { --accent-color: #c084fc; }
+
 .health-card {
+  position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  gap: 14px;
-  padding: 22px 24px 20px;
+  gap: 8px;
+  padding: 18px 20px 0;
   border: 1px solid var(--line);
   border-radius: 14px;
   background: var(--pill-bg);
+  overflow: hidden;
   transition: border-color 220ms ease, transform 220ms ease, background 220ms ease;
 }
 
 .health-card:hover {
-  border-color: var(--accent);
+  border-color: var(--accent-color);
   transform: translateY(-1px);
+}
+
+.health-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
 }
 
 .health-label {
   color: var(--muted);
   font-family: var(--mono);
-  font-size: 0.64rem;
+  font-size: 0.62rem;
   text-transform: uppercase;
   letter-spacing: 0.1em;
+}
+
+.health-pill {
+  display: inline-flex;
+  align-items: center;
+  height: 18px;
+  padding: 0 7px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--accent-color) 18%, transparent);
+  color: var(--accent-color);
+  font-family: var(--mono);
+  font-size: 0.56rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 600;
+}
+
+.health-value-row {
+  margin-top: 4px;
 }
 
 .health-value {
   color: var(--text);
   font-family: var(--headline);
-  font-size: clamp(1.6rem, 2.6vw, 2.2rem);
+  font-size: clamp(1.65rem, 2.6vw, 2.1rem);
   font-weight: 650;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.025em;
   line-height: 1;
   display: inline-flex;
   align-items: baseline;
@@ -2025,7 +2083,7 @@ html.party-mode::before {
 
 .health-unit {
   color: var(--muted);
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   font-family: var(--mono);
   text-transform: uppercase;
   letter-spacing: 0.06em;
@@ -2034,16 +2092,35 @@ html.party-mode::before {
 
 .health-meta {
   color: var(--quiet);
-  font-size: 0.7rem;
+  font-size: 0.68rem;
   font-family: var(--mono);
   letter-spacing: 0.02em;
+  margin-bottom: 10px;
+}
+
+.health-spark {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 36px;
+  color: var(--accent-color);
+  opacity: 0.55;
+  mask-image: linear-gradient(to top, rgba(0, 0, 0, 1) 30%, rgba(0, 0, 0, 0));
+  -webkit-mask-image: linear-gradient(to top, rgba(0, 0, 0, 1) 30%, rgba(0, 0, 0, 0));
+  pointer-events: none;
+}
+
+.health-card:hover .health-spark {
+  opacity: 0.9;
 }
 
 .health-footer {
   flex: 0 0 auto;
-  margin: 18px 0 0;
+  margin: 16px 0 0;
   color: var(--quiet);
-  font-size: 0.7rem;
+  font-size: 0.65rem;
   font-family: var(--mono);
   letter-spacing: 0.04em;
   line-height: 1.45;
