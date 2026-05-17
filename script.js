@@ -1284,3 +1284,97 @@ function showToast(message, isError) {
   startFallback();
   connect();
 })();
+
+(function initHealthData() {
+  const grid = document.querySelector(".health-grid");
+  if (!grid) return;
+  const endpoint = grid.dataset.healthApi;
+  if (!endpoint) return;
+
+  function setText(selector, value) {
+    if (value === null || value === undefined || value === "" || (typeof value === "number" && Number.isNaN(value))) return;
+    document.querySelectorAll(selector).forEach((el) => { el.textContent = value; });
+  }
+
+  function fmtInt(n) {
+    if (n == null || Number.isNaN(n)) return null;
+    return Math.round(n).toLocaleString("fr-FR").replace(/ /g, " ");
+  }
+  function fmtKm(km) {
+    if (km == null) return null;
+    return km < 1 ? (km * 1000).toFixed(0) + " m" : km.toFixed(1) + " km";
+  }
+  function fmtHoursTotal(h) {
+    if (!h) return null;
+    const hours = Math.floor(h);
+    const min = Math.round((h - hours) * 60);
+    return hours + "h " + String(min).padStart(2, "0") + "m";
+  }
+  function fmtHM(h) {
+    if (!h) return null;
+    const hours = Math.floor(h);
+    const min = Math.round((h - hours) * 60);
+    return hours + ":" + String(min).padStart(2, "0");
+  }
+
+  function apply(d) {
+    if (!d) return;
+    setText("[data-health-resting]", fmtInt(d.resting_heart_rate?.qty));
+    setText("[data-health-vo2]", d.vo2_max?.qty ? d.vo2_max.qty.toFixed(1) : null);
+    setText("[data-health-hrv]", fmtInt(d.heart_rate_variability?.qty));
+
+    if (d.sleep_analysis) {
+      const s = d.sleep_analysis;
+      setText("[data-health-sleep-total]", fmtHoursTotal(s.totalSleep));
+      setText("[data-health-sleep-rem]", fmtHM(s.rem));
+      setText("[data-health-sleep-deep]", fmtHM(s.deep));
+      setText("[data-health-sleep-core]", fmtHM(s.core));
+    }
+
+    setText("[data-health-steps]", fmtInt(d.step_count?.qty));
+    setText("[data-health-distance]", fmtKm(d.walking_running_distance?.qty));
+    const stand = d.apple_stand_hour?.qty ?? d.stand_hours?.qty;
+    setText("[data-health-stand]", stand != null ? Math.round(stand) + "h" : null);
+
+    const waterMl = d.dietary_water?.qty;
+    if (waterMl != null) setText("[data-health-water]", (waterMl / 1000).toFixed(1));
+    setText("[data-health-daylight]", fmtInt(d.time_in_daylight?.qty));
+
+    const wrist = d.apple_sleeping_wrist_temperature?.qty ?? d.wrist_temperature?.qty;
+    if (wrist != null) setText("[data-health-wrist]", wrist.toFixed(1) + "°C");
+  }
+
+  let inflight = null;
+  async function refresh() {
+    if (inflight) return inflight;
+    inflight = (async () => {
+      try {
+        const res = await fetch(endpoint, { cache: "no-store" });
+        if (!res.ok) return;
+        const data = await res.json();
+        apply(data);
+      } catch (e) {
+        console.warn("Health fetch failed", e);
+      } finally {
+        inflight = null;
+      }
+    })();
+    return inflight;
+  }
+
+  refresh();
+  let timer = null;
+  const portrait = document.querySelector(".portrait");
+  if (portrait) {
+    const obs = new MutationObserver(() => {
+      if (portrait.classList.contains("is-health")) {
+        refresh();
+        if (!timer) timer = setInterval(refresh, 60000);
+      } else if (timer) {
+        clearInterval(timer);
+        timer = null;
+      }
+    });
+    obs.observe(portrait, { attributes: true, attributeFilter: ["class"] });
+  }
+})();

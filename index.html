@@ -217,35 +217,35 @@
             <h3 class="health-title">Adrien, last 24h</h3>
             <p class="health-subtitle">From Apple Watch · auto-synced</p>
           </header>
-          <div class="health-grid">
+          <div class="health-grid" data-health-api="https://adrien-health.pulssart.workers.dev/health">
             <article class="health-card">
               <span class="health-label">Heart rate</span>
               <span class="health-value"><span data-live-bpm>72</span><span class="health-unit">BPM</span></span>
-              <span class="health-meta">Live · resting 58</span>
+              <span class="health-meta">Live · resting <span data-health-resting>—</span></span>
             </article>
             <article class="health-card">
               <span class="health-label">Sleep last night</span>
-              <span class="health-value">9h 31m</span>
-              <span class="health-meta">REM 2:36 · Deep 0:39 · Core 6:04</span>
+              <span class="health-value" data-health-sleep-total>—</span>
+              <span class="health-meta">REM <span data-health-sleep-rem>—</span> · Deep <span data-health-sleep-deep>—</span> · Core <span data-health-sleep-core>—</span></span>
             </article>
             <article class="health-card">
               <span class="health-label">Activity</span>
-              <span class="health-value">4 217 <span class="health-unit">steps</span></span>
-              <span class="health-meta">5.4 km · stand 8h</span>
+              <span class="health-value"><span data-health-steps>—</span> <span class="health-unit">steps</span></span>
+              <span class="health-meta"><span data-health-distance>—</span> · stand <span data-health-stand>—</span></span>
             </article>
             <article class="health-card">
               <span class="health-label">Wellness</span>
-              <span class="health-value">1.0 <span class="health-unit">L</span></span>
-              <span class="health-meta">22 min daylight · 36.1°C wrist</span>
+              <span class="health-value"><span data-health-water>—</span> <span class="health-unit">L</span></span>
+              <span class="health-meta"><span data-health-daylight>—</span> min daylight · <span data-health-wrist>—</span> wrist</span>
             </article>
             <article class="health-card">
               <span class="health-label">VO₂ max</span>
-              <span class="health-value">42.3</span>
+              <span class="health-value" data-health-vo2>—</span>
               <span class="health-meta">mL/kg·min</span>
             </article>
             <article class="health-card">
               <span class="health-label">HRV</span>
-              <span class="health-value">47 <span class="health-unit">ms</span></span>
+              <span class="health-value"><span data-health-hrv>—</span> <span class="health-unit">ms</span></span>
               <span class="health-meta">7-day average</span>
             </article>
           </div>
