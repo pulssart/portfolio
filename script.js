@@ -1130,28 +1130,55 @@ function showToast(message, isError) {
   if (!token) {
     try { token = localStorage.getItem("pulsoid_token") || ""; } catch (_) {}
   }
-  if (!token) return;
   const valueEl = widget.querySelector(".bpm-value");
 
   let ws = null;
   let staleTimer = null;
   let reconnectDelay = 1500;
+  let fallbackTimer = null;
+  let fallbackBpm = 70 + Math.floor(Math.random() * 8);
+  let isLive = false;
 
-  function markStale() {
-    widget.classList.add("is-stale");
-  }
-
-  function setBpm(bpm) {
-    if (!bpm || bpm < 20 || bpm > 250) return;
+  function render(bpm) {
     widget.hidden = false;
     widget.classList.remove("is-stale");
     widget.style.setProperty("--bpm", String(bpm));
     if (valueEl) valueEl.textContent = String(bpm);
+  }
+
+  function tickFallback() {
+    fallbackBpm += (Math.random() - 0.5) * 2.4;
+    if (fallbackBpm < 64) fallbackBpm = 64;
+    if (fallbackBpm > 82) fallbackBpm = 82;
+    render(Math.round(fallbackBpm));
+    fallbackTimer = setTimeout(tickFallback, 1800 + Math.random() * 1800);
+  }
+
+  function startFallback() {
+    if (fallbackTimer) return;
+    isLive = false;
+    tickFallback();
+  }
+
+  function stopFallback() {
+    if (fallbackTimer) { clearTimeout(fallbackTimer); fallbackTimer = null; }
+  }
+
+  function setLiveBpm(bpm) {
+    if (!bpm || bpm < 20 || bpm > 250) return;
+    isLive = true;
+    stopFallback();
+    render(bpm);
     if (staleTimer) clearTimeout(staleTimer);
-    staleTimer = setTimeout(markStale, 8000);
+    staleTimer = setTimeout(() => {
+      // No live data for 8s → resume fallback
+      isLive = false;
+      startFallback();
+    }, 8000);
   }
 
   function connect() {
+    if (!token) return;
     try {
       ws = new WebSocket("wss://dev.pulsoid.net/api/v1/data/real_time?access_token=" + encodeURIComponent(token));
     } catch (e) {
@@ -1159,15 +1186,12 @@ function showToast(message, isError) {
       scheduleReconnect();
       return;
     }
-    ws.addEventListener("open", () => {
-      reconnectDelay = 1500;
-      widget.hidden = false;
-    });
+    ws.addEventListener("open", () => { reconnectDelay = 1500; });
     ws.addEventListener("message", (event) => {
       try {
         const msg = JSON.parse(event.data);
         const bpm = (msg && msg.data && msg.data.heart_rate) || msg.heart_rate;
-        if (typeof bpm === "number") setBpm(bpm);
+        if (typeof bpm === "number") setLiveBpm(bpm);
       } catch (_) {}
     });
     ws.addEventListener("close", scheduleReconnect);
@@ -1175,10 +1199,12 @@ function showToast(message, isError) {
   }
 
   function scheduleReconnect() {
-    markStale();
+    if (!isLive) startFallback();
     setTimeout(connect, reconnectDelay);
     reconnectDelay = Math.min(reconnectDelay * 1.6, 20000);
   }
 
+  // Always start with fallback so the widget is visible immediately
+  startFallback();
   connect();
 })();
