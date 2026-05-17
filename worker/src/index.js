@@ -67,12 +67,73 @@ async function readState(env) {
   }
 }
 
+// Metrics that should be summed across the array (daily totals)
+const CUMULATIVE = new Set([
+  "step_count",
+  "walking_running_distance",
+  "flights_climbed",
+  "active_energy",
+  "basal_energy_burned",
+  "apple_exercise_time",
+  "apple_stand_time",
+  "apple_stand_hour",
+  "time_in_daylight",
+  "dietary_water",
+  "swimming_distance",
+  "cycling_distance",
+]);
+
+function todayKey() {
+  const d = new Date();
+  const off = -d.getTimezoneOffset() / 60;
+  const local = new Date(d.getTime() + off * 3600 * 1000);
+  return local.toISOString().slice(0, 10);
+}
+
+function isToday(dateStr) {
+  if (!dateStr) return false;
+  const t = Date.parse(dateStr);
+  if (Number.isNaN(t)) return false;
+  const day = new Date(t).toISOString().slice(0, 10);
+  const today = new Date().toISOString().slice(0, 10);
+  return day === today;
+}
+
 function mergeMetrics(existing, payload) {
   const out = { ...existing, updatedAt: new Date().toISOString() };
   const metrics = (payload && payload.data && payload.data.metrics) || [];
+  const today = todayKey();
 
   for (const m of metrics) {
     if (!m || !m.name || !Array.isArray(m.data) || !m.data.length) continue;
+
+    if (CUMULATIVE.has(m.name)) {
+      // Sum today's samples only, with a daily reset
+      let total = 0;
+      let count = 0;
+      let latestDate = null;
+      for (const entry of m.data) {
+        if (typeof entry.qty !== "number") continue;
+        if (!isToday(entry.date)) continue;
+        total += entry.qty;
+        count += 1;
+        if (!latestDate || Date.parse(entry.date) > Date.parse(latestDate)) latestDate = entry.date;
+      }
+      // Merge with stored same-day total
+      const prev = existing[m.name];
+      const prevSameDay = prev && prev.day === today ? prev.qty || 0 : 0;
+      const merged = prevSameDay + total;
+      if (count === 0 && !prev) continue;
+      out[m.name] = {
+        qty: count > 0 ? merged : prev ? prev.qty : 0,
+        day: today,
+        date: latestDate || (prev && prev.date) || null,
+        units: m.units || (prev && prev.units),
+        samples: (prev && prev.day === today ? prev.samples || 0 : 0) + count,
+      };
+      continue;
+    }
+
     const latest = pickLatest(m.data, ["date", "sleepEnd", "sleepStart", "end", "start"]);
     if (!latest) continue;
     out[m.name] = { ...latest, units: m.units || undefined };
