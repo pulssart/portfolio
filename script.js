@@ -683,6 +683,63 @@ document.querySelectorAll(".feedback-slider").forEach(initFeedbackSlider);
     });
   });
 
+  // Video player
+  const videoPlayer = portrait.querySelector(".video-player");
+  const videoIframe = videoPlayer && videoPlayer.querySelector("iframe");
+  const videoFrame = videoPlayer && videoPlayer.querySelector(".video-frame");
+  const videoClose = videoPlayer && videoPlayer.querySelector(".video-close");
+  const videoAspect = 16 / 9;
+
+  function fitVideo() {
+    if (!videoIframe || !videoFrame) return;
+    const cw = videoFrame.clientWidth;
+    const ch = videoFrame.clientHeight;
+    if (!cw || !ch) return;
+    let w = cw;
+    let h = w / videoAspect;
+    if (h < ch) {
+      h = ch;
+      w = h * videoAspect;
+    }
+    videoIframe.style.width = w + "px";
+    videoIframe.style.height = h + "px";
+    videoIframe.style.left = ((cw - w) / 2) + "px";
+    videoIframe.style.top = ((ch - h) / 2) + "px";
+  }
+
+  function openVideo(id) {
+    if (!videoIframe) return;
+    close();
+    clearActive();
+    videoIframe.src = "https://www.youtube.com/embed/" + id + "?autoplay=1&playsinline=1&rel=0&modestbranding=1";
+    videoPlayer.hidden = false;
+    portrait.classList.add("is-video");
+    requestAnimationFrame(fitVideo);
+  }
+
+  function closeVideo() {
+    if (!videoIframe) return;
+    playCloseSound();
+    videoIframe.src = "";
+    portrait.classList.remove("is-video");
+    setTimeout(() => { videoPlayer.hidden = true; }, 280);
+  }
+
+  if (videoClose) videoClose.addEventListener("click", closeVideo);
+  window.addEventListener("resize", fitVideo);
+  if (window.ResizeObserver && videoFrame) new ResizeObserver(fitVideo).observe(videoFrame);
+  window.addEventListener("keydown", (e) => {
+    if (portrait.classList.contains("is-video") && e.key === "Escape") closeVideo();
+  });
+
+  document.querySelectorAll("[data-video]").forEach((el) => {
+    el.addEventListener("click", (e) => {
+      e.preventDefault();
+      playOpenSound();
+      openVideo(el.dataset.video);
+    });
+  });
+
   closeBtn && closeBtn.addEventListener("click", close);
   infoBtn && infoBtn.addEventListener("click", () => {
     const expanded = infoBtn.getAttribute("aria-expanded") === "true";

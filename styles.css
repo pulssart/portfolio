@@ -1705,3 +1705,64 @@ html.party-mode::before {
     content: none;
   }
 }
+
+/* Video player overlays portrait */
+.portrait.is-video .portrait-overlay,
+.portrait.is-video .feedback-slider,
+.portrait.is-video .project-slideshow {
+  display: none;
+}
+
+.portrait.is-video .video-player {
+  display: block;
+}
+
+.video-player {
+  position: absolute;
+  inset: 0;
+  display: none;
+  z-index: 2;
+  background: #000;
+  animation: project-fade-in 360ms ease both;
+}
+
+.video-frame {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.video-frame iframe {
+  position: absolute;
+  border: 0;
+}
+
+.video-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  z-index: 3;
+  width: 36px;
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.4);
+  color: #fff;
+  backdrop-filter: blur(6px);
+  transition: border-color 180ms ease, background 180ms ease, transform 180ms ease;
+}
+
+.video-close:hover {
+  border-color: rgba(255, 255, 255, 0.7);
+  background: rgba(0, 0, 0, 0.6);
+  transform: rotate(90deg);
+  text-decoration: none;
+}
+
+.video-close svg {
+  width: 14px;
+  height: 14px;
+}
