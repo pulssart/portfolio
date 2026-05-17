@@ -526,6 +526,12 @@ document.querySelectorAll(".feedback-slider").forEach(initFeedbackSlider);
       role: "Side Project · Web",
       info: "Find promising leads before anyone starts searching for them.",
     },
+    "blur-and-colors": { title: "Blur and colors", role: "Digital art", info: "A series exploring soft focus, color fields, and the moment where shapes start to dissolve into pure light." },
+    minimal: { title: "Minimal", role: "Digital art", info: "Strict reduction: a few shapes, a few lines, a lot of breathing room." },
+    splatters: { title: "Splatters", role: "Digital art", info: "Controlled chaos — drips, splashes, and accidents shaped into composition." },
+    "flower-beauty": { title: "Flower beauty", role: "Digital art", info: "Botanical close-ups treated with the patience of a still life." },
+    horses: { title: "Horses", role: "Digital art", info: "Motion studies and portraits of the most photogenic mammal." },
+    "oil-painting": { title: "Oil painting", role: "Digital art", info: "Digital surfaces pretending to be canvas — thick strokes, slow tempo." },
   };
 
   const INTERVAL = 4500;
