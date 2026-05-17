@@ -864,12 +864,6 @@ document.querySelectorAll(".feedback-slider").forEach(initFeedbackSlider);
     });
   });
 
-  // Auto-open Alma on page load (muted, info panel collapsed)
-  const almaLink = document.querySelector('[data-video="Dk3Fu_M4crs"]');
-  if (almaLink) {
-    openVideo("Dk3Fu_M4crs", almaLink.dataset.videoInfo, { muted: true, showInfo: false, featured: true });
-  }
-
   closeBtn && closeBtn.addEventListener("click", close);
   infoBtn && infoBtn.addEventListener("click", () => {
     const expanded = infoBtn.getAttribute("aria-expanded") === "true";
