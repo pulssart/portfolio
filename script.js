@@ -642,6 +642,13 @@ document.querySelectorAll(".feedback-slider").forEach(initFeedbackSlider);
     document.querySelectorAll(".is-project-active").forEach((el) => el.classList.remove("is-project-active"));
   }
 
+  function silentCloseVideo() {
+    if (!portrait.classList.contains("is-video")) return;
+    if (videoIframe) videoIframe.src = "";
+    portrait.classList.remove("is-video");
+    if (videoPlayer) videoPlayer.hidden = true;
+  }
+
   async function open(key) {
     const proj = projects[key];
     if (!proj) return;
@@ -651,6 +658,7 @@ document.querySelectorAll(".feedback-slider").forEach(initFeedbackSlider);
       console.warn("No images found in ./assets/" + key + "/ (expected 1.jpg, 2.jpg, ...)");
       return;
     }
+    silentCloseVideo();
     if (titleEl) titleEl.textContent = proj.title;
     if (roleEl) roleEl.textContent = proj.role;
     if (infoText) infoText.textContent = proj.info || "";
@@ -741,10 +749,17 @@ document.querySelectorAll(".feedback-slider").forEach(initFeedbackSlider);
     videoIframe.style.top = ((ch - h) / 2) + "px";
   }
 
+  function silentCloseProject() {
+    if (!portrait.classList.contains("is-project")) return;
+    stopAuto();
+    portrait.classList.remove("is-project");
+    clearActive();
+    if (slideshow) slideshow.hidden = true;
+  }
+
   function openVideo(id, info, opts) {
     if (!videoIframe) return;
-    close();
-    clearActive();
+    silentCloseProject();
     const withControls = opts && opts.controls;
     const muted = !opts || opts.muted !== false;
     const ctrl = withControls ? "controls=1&fs=1&disablekb=0" : "controls=0&disablekb=1&fs=0";
