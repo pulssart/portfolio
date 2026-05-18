@@ -925,6 +925,22 @@ footer span:first-child,
   object-fit: contain;
 }
 
+.mention-logo--mark {
+  border-radius: 5px;
+  background: var(--pill-bg);
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 0.58rem;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.mention-link:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  text-decoration: none;
+}
+
 .feedback-section {
   margin-bottom: 32px;
 }
