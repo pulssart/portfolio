@@ -2295,8 +2295,8 @@ html.party-mode::before {
 .health-spark--ecg {
   overflow: visible;
   opacity: 0.85;
-  bottom: 28px;
-  height: 44px;
+  bottom: 6px;
+  height: 36px;
 }
 
 .health-spark--ecg .ecg-loop {
