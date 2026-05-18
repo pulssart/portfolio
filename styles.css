@@ -2285,7 +2285,7 @@ html.party-mode::before {
 }
 
 .health-card[data-accent="heart"] .health-spark {
-  bottom: 12px;
+  bottom: -10px;
 }
 
 .health-spark--ecg {
