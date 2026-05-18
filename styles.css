@@ -443,13 +443,13 @@ ol {
   content: "";
   position: absolute;
   right: 15px;
-  bottom: 14px;
+  bottom: 14.5px;
   z-index: 1;
-  width: 0;
-  height: 0;
-  border-top: 4px solid transparent;
-  border-bottom: 4px solid transparent;
-  border-left: 7px solid rgba(255, 255, 255, 0.92);
+  width: 8px;
+  height: 9px;
+  border: 0;
+  background: rgba(255, 255, 255, 0.92);
+  clip-path: polygon(0 0, 100% 50%, 0 100%);
 }
 
 .video-section .video-thumb-copy {
