@@ -935,6 +935,11 @@ footer span:first-child,
   line-height: 1;
 }
 
+.mention-link {
+  font-weight: 620;
+  text-decoration: none;
+}
+
 .mention-link:hover {
   border-color: var(--accent);
   color: var(--accent);
@@ -1362,6 +1367,7 @@ html.party-mode::before {
 .mention-button {
   cursor: pointer;
   font: inherit;
+  font-weight: 620;
   text-transform: inherit;
   letter-spacing: inherit;
 }
