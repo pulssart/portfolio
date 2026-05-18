@@ -376,6 +376,10 @@ ol {
   width: 100%;
 }
 
+.intro-video-row {
+  margin-top: 20px;
+}
+
 .video-section .video-grid li {
   display: block;
   margin: 0;
