@@ -373,7 +373,7 @@ ol {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 8px;
-  max-width: 520px;
+  width: 100%;
 }
 
 .video-section .video-grid li {
@@ -387,7 +387,7 @@ ol {
   content: none;
 }
 
-.video-thumb {
+.video-section .video-thumb {
   position: relative;
   display: block;
   aspect-ratio: 16 / 7.2;
@@ -399,14 +399,14 @@ ol {
   transition: border-color 180ms ease, transform 180ms ease, background 180ms ease;
 }
 
-.video-thumb:hover {
+.video-section .video-thumb:hover {
   border-color: var(--accent);
   color: var(--text);
   text-decoration: none;
   transform: translateY(-1px);
 }
 
-.video-thumb img {
+.video-section .video-thumb img {
   display: block;
   width: 100%;
   height: 100%;
@@ -417,12 +417,12 @@ ol {
   transition: filter 180ms ease, transform 220ms ease;
 }
 
-.video-thumb:hover img {
+.video-section .video-thumb:hover img {
   filter: saturate(0.95) contrast(1.06) brightness(0.92);
   transform: scale(1.42);
 }
 
-.video-thumb::after {
+.video-section .video-thumb::after {
   content: "";
   position: absolute;
   inset: auto 8px 8px auto;
@@ -435,7 +435,7 @@ ol {
   backdrop-filter: blur(8px);
 }
 
-.video-thumb::before {
+.video-section .video-thumb::before {
   content: "";
   position: absolute;
   right: 15px;
@@ -789,7 +789,7 @@ footer span:first-child,
     max-width: none;
   }
 
-  .video-thumb {
+  .video-section .video-thumb {
     aspect-ratio: 16 / 7.2;
   }
 

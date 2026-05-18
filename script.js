@@ -860,7 +860,7 @@ document.querySelectorAll(".feedback-slider").forEach(initFeedbackSlider);
     el.addEventListener("click", (e) => {
       e.preventDefault();
       playOpenSound();
-      openVideo(el.dataset.video, el.dataset.videoInfo, { controls: el.dataset.videoControls === "1" });
+      openVideo(el.dataset.video, el.dataset.videoInfo, { controls: el.dataset.videoControls === "1", muted: false });
     });
   });
 
