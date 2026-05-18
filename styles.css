@@ -935,10 +935,6 @@ footer span:first-child,
   line-height: 1;
 }
 
-.mention-link {
-  font-weight: 500;
-}
-
 .mention-link:hover {
   border-color: var(--accent);
   color: var(--accent);
