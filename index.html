@@ -274,6 +274,13 @@
                 <span class="health-meta-line">Deep <span data-health-sleep-deep>—</span></span>
                 <span class="health-meta-line">Core <span data-health-sleep-core>—</span></span>
               </span>
+              <div class="sleep-night" aria-hidden="true">
+                <span class="sleep-moon"></span>
+                <span class="sleep-star sleep-star--one"></span>
+                <span class="sleep-star sleep-star--two"></span>
+                <span class="sleep-star sleep-star--three"></span>
+                <span class="sleep-star sleep-star--four"></span>
+              </div>
             </article>
             <article class="health-card" data-accent="activity">
               <header class="health-card-head">
@@ -287,6 +294,17 @@
                 <span class="health-meta-line"><span data-health-distance>—</span></span>
                 <span class="health-meta-line">Stand <span data-health-stand>—</span></span>
               </span>
+              <svg class="activity-motion health-ambient" viewBox="0 0 180 96" aria-hidden="true">
+                <path class="activity-route" d="M26 70 C58 42 90 78 122 46 S154 58 164 30" />
+                <circle class="activity-runner" cx="26" cy="70" r="4" />
+                <g class="activity-steps">
+                  <path d="M34 77 h14" />
+                  <path d="M62 57 h13" />
+                  <path d="M92 78 h14" />
+                  <path d="M124 51 h13" />
+                  <path d="M150 39 h12" />
+                </g>
+              </svg>
             </article>
             <article class="health-card" data-accent="wellness">
               <canvas class="water-liquid" width="360" height="220" data-water-liquid aria-hidden="true"></canvas>
@@ -314,6 +332,16 @@
                 <span class="health-meta-line">Cardio fitness</span>
                 <span class="health-meta-line">Above average</span>
               </span>
+              <svg class="vo2-flow health-ambient" viewBox="0 0 180 96" aria-hidden="true">
+                <g class="vo2-bars">
+                  <path d="M34 68 V54" />
+                  <path d="M50 68 V42" />
+                  <path d="M66 68 V30" />
+                </g>
+                <circle class="vo2-track" cx="128" cy="48" r="30" />
+                <circle class="vo2-progress" cx="128" cy="48" r="30" />
+                <text class="vo2-mark" x="128" y="53">O₂</text>
+              </svg>
             </article>
             <article class="health-card" data-accent="hrv">
               <header class="health-card-head">
@@ -326,6 +354,11 @@
               <span class="health-meta">
                 <span class="health-meta-line">Heart rate variability</span>
               </span>
+              <svg class="hrv-breath health-ambient" viewBox="0 0 180 96" aria-hidden="true">
+                <path class="hrv-wave hrv-wave--ghost" d="M14 54 C28 38 38 70 52 54 S76 36 90 54 S116 73 132 48 S154 42 166 54" />
+                <path class="hrv-wave hrv-wave--active" d="M14 54 C28 38 38 70 52 54 S76 36 90 54 S116 73 132 48 S154 42 166 54" />
+                <circle class="hrv-beat" cx="14" cy="54" r="3.5" />
+              </svg>
             </article>
           </div>
           <p class="health-footer">Synced from Apple Watch via Health Auto Export. Some metrics may lag a few minutes.</p>
